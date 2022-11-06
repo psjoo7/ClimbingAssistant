@@ -1,16 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_main"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity" >
 
-    <fragment
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="437dp">
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="200dp"
+            tools:context=".MapsActivity"></androidx.fragment.app.FragmentContainerView>
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/map"
-        tools:context=".MapsActivity"
-        android:name="com.google.android.gms.maps.SupportMapFragment" />
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/Location_log"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Location Info" />
+        <TextView
+            android:id="@+id/OK"
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="not yet" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </LinearLayout>
