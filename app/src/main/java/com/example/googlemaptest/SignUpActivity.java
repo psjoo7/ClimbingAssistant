@@ -40,7 +40,7 @@ public class SignUpActivity extends AppCompatActivity {
         checkBtn = findViewById(R.id.CheckButton);
         signUpBtn = findViewById(R.id.signupButton);
         backBtn = findViewById(R.id.BackButton);
-
+        //로그인 화면으로 돌아가기
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -48,6 +48,7 @@ public class SignUpActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        //아이디 체크
         checkBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,7 +90,7 @@ public class SignUpActivity extends AppCompatActivity {
                 queue.add(validateRequest);
             }
         });
-
+        // 회원가입 버튼 클릭시
         signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -99,7 +100,7 @@ public class SignUpActivity extends AppCompatActivity {
                 final String checkPwd = CheckPwd.getText().toString();
                 final String UserAdd = Add.getText().toString();
                 //한 칸이라도 입력 안했을 경우
-                if (UserID.equals("") || UserPwd.equals("") || UserName.equals("") || CheckPwd.equals("") || UserAdd.equals("")) {
+                if (UserID.equals("") || UserPwd.equals("") || UserName.equals("") || checkPwd.equals("") || UserAdd.equals("")) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(SignUpActivity.this);
                     dialog = builder.setMessage("모두 입력해주세요.").setNegativeButton("확인", null).create();
                     dialog.show();
@@ -122,7 +123,7 @@ public class SignUpActivity extends AppCompatActivity {
                             if(UserPwd.equals(checkPwd)) {
                                 if (success) {
                                     Toast.makeText(getApplicationContext(), String.format("%s님 가입을 환영합니다.", UserName), Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                                    Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
                                     startActivity(intent);
                                     //회원가입 실패시
                                 } else {
@@ -144,7 +145,8 @@ public class SignUpActivity extends AppCompatActivity {
                 };
                 //서버로 Volley를 이용해서 요청
                 JoinRequest registerRequest = new JoinRequest( UserID, UserPwd, UserName, UserAdd, responseListener);
-                RequestQueue queue = Volley.newRequestQueue( SignUpActivity.this );
+                RequestQueue queue;
+                queue = Volley.newRequestQueue( SignUpActivity.this );
                 queue.add( registerRequest );
 
 
