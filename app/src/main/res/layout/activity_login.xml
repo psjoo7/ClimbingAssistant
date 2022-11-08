@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="match_parent"
+        android:layout_height="264dp"
+        android:layout_marginTop="100sp"
+        app:srcCompat="@drawable/cat" />
+
+    <Button
+        android:id="@+id/ManageButton"
+        android:layout_width="111dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="150sp"
+        android:layout_marginTop="590sp"
+        android:backgroundTint="@color/teal_700"
+        android:fontFamily="@font/aclonica"
+        android:text="Manage Mode"
+        android:textAlignment="center"
+        android:textSize="12sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="587dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="0dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/Apptitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0sp"
+            android:fontFamily="@font/aclonica"
+            android:text="@string/apptitle"
+            android:textAlignment="center"
+            android:textColor="#009688"
+            android:textSize="48sp"
+            android:textStyle="bold|italic" />
+
+        <EditText
+            android:id="@+id/userID"
+            android:layout_width="266sp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="80sp"
+            android:layout_marginTop="270sp"
+            android:ems="10"
+            android:fontFamily="@font/aclonica"
+            android:hint="@string/Loginid"
+            android:inputType="text"
+            android:textSize="20sp"
+            android:textStyle="bold|italic" />
+
+        <EditText
+            android:id="@+id/userPwd"
+            android:layout_width="266sp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="80sp"
+            android:layout_marginTop="30sp"
+            android:ems="10"
+            android:fontFamily="@font/aclonica"
+            android:hint="@string/Loginpw"
+            android:inputType="textPassword"
+            android:textSize="20sp"
+            android:textStyle="bold|italic" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0sp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/JoinButton"
+                android:layout_width="118dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="80sp"
+                android:layout_marginTop="20sp"
+                android:backgroundTint="@color/teal_700"
+                android:fontFamily="@font/aclonica"
+                android:text="@string/JoinButton"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/LoginButton"
+                android:layout_width="118sp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10sp"
+                android:layout_marginTop="20sp"
+                android:backgroundTint="@color/teal_700"
+                android:fontFamily="@font/aclonica"
+                android:text="Login"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
