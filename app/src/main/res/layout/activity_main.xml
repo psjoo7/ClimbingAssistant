@@ -7,37 +7,46 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity" >
 
-    <LinearLayout
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="437dp">
-
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/map"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="200dp"
-            tools:context=".MapsActivity"></androidx.fragment.app.FragmentContainerView>
-    </LinearLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_height="wrap_content"
+        tools:context=".mainfragment">
+    </fragment>
+    <TextView
+        android:id="@+id/Location_log"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:text="Location Info"
+        android:layout_marginTop="50dp"/>
+    <!--    <LinearLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:orientation="vertical">-->
 
-        <TextView
-            android:id="@+id/Location_log"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Location Info" />
-        <TextView
-            android:id="@+id/OK"
-            android:layout_marginTop="30dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="not yet" />
+    <!--        <TextView-->
+    <!--            android:id="@+id/Location_log"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="match_parent"-->
+    <!--            android:text="Location Info" />-->
+    <!--        <TextView-->
+    <!--            android:id="@+id/OK"-->
+    <!--            android:layout_marginTop="30dp"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="match_parent"-->
+    <!--            android:text="not yet" />-->
+    <!--        <Button-->
+    <!--            android:id="@+id/complete"-->
+    <!--            android:layout_marginTop="100dp"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:text="@string/complete"-->
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <!--            tools:ignore="MissingConstraints" />-->
+
+    <!--    </LinearLayout>-->
 
 
 </LinearLayout>
