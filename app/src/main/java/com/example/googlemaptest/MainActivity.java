@@ -5,6 +5,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,12 +22,12 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +46,8 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.IOException;
@@ -50,19 +55,16 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
-import okhttp3.HttpUrl;
 import okhttp3.Response;
 import okhttp3.Request;
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
-import okhttp3.RequestBody;
 
 
 public class MainActivity extends AppCompatActivity
         implements OnMapReadyCallback,
         ActivityCompat.OnRequestPermissionsResultCallback{
     LinkedList<Location> location_info = new LinkedList<Location>();
-
+    private GoogleMap resultmap;
     private GoogleMap mMap;
     private Marker currentMarker = null;
 
@@ -88,9 +90,11 @@ public class MainActivity extends AppCompatActivity
     private FusedLocationProviderClient mFusedLocationClient;
     private LocationRequest locationRequest;
     private Location location;
-
+    private FragmentManager fragmentmanager;
+    private FragmentTransaction transaction;
     private TextView location_log ;
     private TextView isOK;
+    private Button done ;
 
 
 
@@ -105,16 +109,13 @@ public class MainActivity extends AppCompatActivity
                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         setContentView(R.layout.activity_main);
-
+        location_log = findViewById(R.id.Location_log);
         mLayout = findViewById(R.id.layout_main);
-
         locationRequest = new LocationRequest()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                 .setInterval(UPDATE_INTERVAL_MS)
                 .setFastestInterval(FASTEST_UPDATE_INTERVAL_MS);
 
-        location_log = findViewById(R.id.Location_log);
-        isOK = findViewById(R.id.OK);
         LocationSettingsRequest.Builder builder =
                 new LocationSettingsRequest.Builder();
 
@@ -128,6 +129,8 @@ public class MainActivity extends AppCompatActivity
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
+
+
     int JSONParse(String jsonStr) {
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -174,10 +177,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    void store_location(LinkedList L,  Location loc)
-    {
-//        L.add();
-    }
+
     @Override
     public void onMapReady(final GoogleMap googleMap) {
         Log.d(TAG, "onMapReady :");
@@ -240,8 +240,7 @@ public class MainActivity extends AppCompatActivity
 
 
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
-        // 현재 오동작을 해서 주석처리
-        //mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+//        mMap.animateCamera(CameraUpdateFactory.zoomTo(30));
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
 
             @Override
@@ -261,9 +260,10 @@ public class MainActivity extends AppCompatActivity
 
             List<Location> locationList = locationResult.getLocations();
 
+
             if (locationList.size() > 0) {
+
                 location = locationList.get(locationList.size() - 1);
-                System.out.println(location);
                 location_info.add(location);
                 //location = locationList.get(0);
 
@@ -271,22 +271,10 @@ public class MainActivity extends AppCompatActivity
                         = new LatLng(location.getLatitude(), location.getLongitude());
 
 
+
                 String markerTitle = getCurrentAddress(currentPosition);
                 String markerSnippet = "위도:" + String.valueOf(location.getLatitude())
-                        + " 경도:" + String.valueOf(location.getLongitude());
-                String Lat1 = String.valueOf(location.getLatitude());
-                String Long1 = String.valueOf(location.getLongitude());
-
-                Log.d(TAG, "onLocationResult : " + markerSnippet);
-
-
-                //현재 위치에 마커 생성하고 이동
-                setCurrentLocation(location, markerTitle, markerSnippet);
-
-                mCurrentLocatiion = location;
-
-                String.valueOf(location.getLatitude());
-
+                        + " 경도:" + String.valueOf(location.getLongitude() );
 
                 new Thread(() -> {
                     Looper.prepare();
@@ -298,12 +286,31 @@ public class MainActivity extends AppCompatActivity
                     message.setData(bundle);
                     handler.sendMessage(message);
                     double ele1 = Double.parseDouble(ele);
-                    location_log.setText("고도 : " + ele);
-                    if(ele1 >= Goal)
-                    {
-                        isOK.setText("정복했습니다");
-                    }
+                    
                 }).start();
+
+                String Lat1 = String.valueOf(location.getLatitude());
+                String Long1 = String.valueOf(location.getLongitude());
+
+                Log.d(TAG, "onLocationResult : " + markerSnippet);
+
+
+
+                //현재 위치에 마커 생성하고 이동
+                setCurrentLocation(location, markerTitle, markerSnippet);
+
+                mCurrentLocatiion = location;
+
+                String.valueOf(location.getLatitude());
+
+
+
+
+                PolylineOptions polylineOptions = new PolylineOptions();
+                if(location_info.size()>20){
+                    drawLine(mMap,location_info);
+                    Log.d(TAG, "onLocationResult: 그림그렸다");
+                }
 
             }
         }
@@ -365,6 +372,7 @@ public class MainActivity extends AppCompatActivity
 
 
     }
+
 
 
     @Override
@@ -613,77 +621,14 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-
-    class setElevation extends Thread
+    public void drawLine(GoogleMap map, LinkedList<Location> l)
     {
-        double latitude;
-        double longitude;
-        boolean running = false;
-        setElevation(double latitude, double longitude){
-            latitude = this.latitude;
-            longitude = this.longitude;
-        }
-        public void run()
+        PolylineOptions polylineOptions = new PolylineOptions();
+
+        for(int i=0; i<l.size() ; i++)
         {
-            running = true;
-            while(running) {
-                try {
-                    String key = "AIzaSyCGQ8fB1BVIr4mq-lHuxjaQy4EvFomeXaQ";
-                    String url = "https://maps.googleapis.com/maps/api/elevation/json";
-                    OkHttpClient client = new OkHttpClient().newBuilder()
-                            .build();
-                    Request request = new Request.Builder()
-                            .url("https://maps.googleapis.com/maps/api/elevation/json?locations=" + latitude + "%2C" + longitude + "&key=" + key)
-                            .method("GET", null)
-                            .build();
-
-
-                    Response response = client.newCall(request).execute();
-                    String msg = response.body().string();
-                    System.out.println(msg);
-                    JSONObject object = new JSONObject(msg);
-                    String results = object.getString("results");
-                    JSONArray objectArr = new JSONArray(results);
-                    JSONObject result = new JSONObject(objectArr.getString(0));
-                    String ele = result.getString("elevation");
-                    JSONObject result1 = new JSONObject(result.getString("location"));
-                    String lat = result1.getString("lat");
-                    String lon = result1.getString("lng");
-                    Handler handler = new Handler();
-                    Message message = handler.obtainMessage();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("elevation", ele);
-                    bundle.putString("lattitude", lat);
-                    bundle.putString("longitude", lon);
-                    message.setData(bundle);
-                    handler.sendMessage(message);
-                    location_log.setText("위도 : " + lat + " 경도 : " + lon + " 고도 : " + ele);
-
-                } catch (Exception e) {
-                    System.out.println(e.toString());
-                }
-                try {
-                    Thread.sleep(1000);
-                }catch (Exception e){
-                    System.out.println(e);
-                    System.out.println("eeeeeeeeeeeee");
-                }
-            }
+            polylineOptions.add(new LatLng(l.get(i).getLatitude(),l.get(i).getLongitude()));
         }
+        Polyline polyline = map.addPolyline(polylineOptions);
     }
-
-    class ValueHandler extends Handler {
-        public void handleMessage(@NonNull Message msg) {
-            super.handleMessage(msg);
-
-
-            Bundle bundle = msg.getData();
-            String elevation = bundle.getString("elevation");
-            location_log.setText( "고도 : " + elevation);
-        }
-    }
-
-
-
 }
-
