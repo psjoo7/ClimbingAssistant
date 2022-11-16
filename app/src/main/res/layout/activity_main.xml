@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_main"
     android:orientation="vertical"
@@ -7,46 +8,43 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity" >
 
-
     <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         tools:context=".mainfragment">
     </fragment>
-    <TextView
-        android:id="@+id/Location_log"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Location Info"
-        android:layout_marginTop="50dp"/>
-    <!--    <LinearLayout-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent"-->
-    <!--        android:orientation="vertical">-->
 
-    <!--        <TextView-->
-    <!--            android:id="@+id/Location_log"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="match_parent"-->
-    <!--            android:text="Location Info" />-->
-    <!--        <TextView-->
-    <!--            android:id="@+id/OK"-->
-    <!--            android:layout_marginTop="30dp"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="match_parent"-->
-    <!--            android:text="not yet" />-->
-    <!--        <Button-->
-    <!--            android:id="@+id/complete"-->
-    <!--            android:layout_marginTop="100dp"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:text="@string/complete"-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-    <!--            tools:ignore="MissingConstraints" />-->
+            <TextView
+                android:id="@+id/Location_log"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Location Info"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <!--    </LinearLayout>-->
+            <Button
+                android:id="@+id/complete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="complete"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="MissingConstraints" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </LinearLayout>

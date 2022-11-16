@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">SantaTellMe</string>
-    <string name="apptitle">Santa Tell Me</string>
+    <string name="apptitle">Santa Tell\nMe</string>
     <string name="Loginpw">Your Password</string>
     <string name="Loginid">Your id</string>
     <string name="JoinButton">Join</string>
     <string name="CheckButton">Check</string>
+    <string name="registerGuide">Not a Member of Santa?</string>
 </resources>
