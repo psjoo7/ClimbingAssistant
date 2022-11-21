@@ -139,8 +139,8 @@
 
     <RadioGroup
         android:id="@+id/agreement"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="347dp"
+        android:layout_height="46dp"
         android:layout_gravity="center_horizontal"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -185,9 +185,10 @@
         android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/signupButton"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/agreement"
-        app:layout_constraintVertical_bias="0.52" />
+        app:layout_constraintTop_toBottomOf="@+id/agreement" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/signupButton"
@@ -201,7 +202,7 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/BackButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/BackButton"
+        app:layout_constraintTop_toBottomOf="@+id/agreement"
         app:layout_constraintVertical_bias="0.0" />
 
 
