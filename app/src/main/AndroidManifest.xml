@@ -23,10 +23,10 @@
             android:name=".SearchMountActivity"
             android:exported="false" />
         <activity
-            android:name=".startMountActivity"
+            android:name=".RecordActivity"
             android:exported="false" />
         <activity
-            android:name=".RecordActivity"
+            android:name=".startMountActivity"
             android:exported="false" />
         <activity
             android:name=".LoadingActivity"

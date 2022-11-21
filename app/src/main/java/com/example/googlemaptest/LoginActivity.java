@@ -40,8 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("UserInfo");
 
         // 타이틀바 삭제
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
+
 
         Intent intent = new Intent(this, LoadingActivity.class);
         startActivity(intent);
