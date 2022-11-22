@@ -49,6 +49,11 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -67,7 +72,7 @@ public class MainActivity extends AppCompatActivity
     private GoogleMap resultmap;
     private GoogleMap mMap;
     private Marker currentMarker = null;
-
+    private Marker mountMarker = null;
     private static final String TAG = "googlemap_example";
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int UPDATE_INTERVAL_MS = 1000;  // 1초
@@ -95,8 +100,6 @@ public class MainActivity extends AppCompatActivity
     private TextView location_log ;
     private TextView isOK;
     private Button done ;
-
-
 
     private View mLayout;  // Snackbar 사용하기 위해서는 View가 필요합니다.
     // (참고로 Toast에서는 Context가 필요했습니다.)
@@ -128,6 +131,8 @@ public class MainActivity extends AppCompatActivity
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+
     }
 
 
@@ -187,7 +192,36 @@ public class MainActivity extends AppCompatActivity
         //런타임 퍼미션 요청 대화상자나 GPS 활성 요청 대화상자 보이기전에
         //지도의 초기위치를 서울로 이동
         setDefaultLocation();
+        FirebaseDatabase.getInstance().getReference("MountainList").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    String key = snapshot.getKey();
+                    MountainList mount_each = snapshot.getValue(MountainList.class);
+                    Log.d("MainActivity", "ValueEventListener : " + mount_each.mname);
+                    Log.d("MainActivity", "ValueEventListener : " + mount_each.end);
+                    Log.d("MainActivity", "ValueEventListener : " + mount_each.starting);
+                    String endPoint = mount_each.end;
+                    String[] endPointSplit = endPoint.split(" ");
+                    Log.d("MainActivity", "ValueEventListener : " + endPointSplit[0]);
+                    Log.d("MainActivity", "ValueEventListener : " + endPointSplit[1]);
+                    LatLng position = new LatLng(Double.parseDouble(endPointSplit[0]), Double.parseDouble(endPointSplit[1]));
+                    MarkerOptions markerOptions = new MarkerOptions();
+                    markerOptions.position(position);
+                    markerOptions.title(mount_each.mname);
+                    markerOptions.snippet(mount_each.maxHeight);
+                    markerOptions.draggable(true);
+                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
 
+                    mMap.addMarker(markerOptions);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
         //런타임 퍼미션 처리
@@ -250,6 +284,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
     }
+
 
     LocationCallback locationCallback = new LocationCallback() {
         @Override
@@ -476,7 +511,7 @@ public class MainActivity extends AppCompatActivity
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
         currentMarker = mMap.addMarker(markerOptions);
 
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(DEFAULT_LOCATION, 15);
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(DEFAULT_LOCATION, 5);
         mMap.moveCamera(cameraUpdate);
 
     }
