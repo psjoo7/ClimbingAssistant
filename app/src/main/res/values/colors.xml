@@ -8,7 +8,13 @@
     <color name="black">#FF000000</color>
     <color name="colorPrimary">#009688</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="light_green">#CBE9E7</color>
+    <color name="opaque">#A6FFFFFF</color>
+    <color name="moreopaque">#80FFFFFF</color>
+    <color name="cloud2">#CBE9E7</color>
+    <color name="cloud2opaque">#73CBE9E7</color>
     <color name="background">#6F009688</color>
     <color name="soyoon">#ff669900</color>
+    <color name="cloud">#FFA7C5FF</color>
+    <color name="darkgreen">#09675E</color>
+    <color name="gray">#CFCFCF</color>
 </resources>

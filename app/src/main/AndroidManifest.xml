@@ -23,7 +23,7 @@
             android:name=".SearchMountActivity"
             android:exported="false" />
         <activity
-            android:name=".RecordActivity"
+            android:name=".SignUpActivity"
             android:exported="false" />
         <activity
             android:name=".startMountActivity"
@@ -41,7 +41,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SignUpActivity"
+            android:name=".RecordActivity"
             android:exported="false" />
         <activity android:name=".MainActivity" />
         <activity

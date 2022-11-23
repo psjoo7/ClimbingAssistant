@@ -5,9 +5,12 @@
       <map>
         <entry key="..\:/Users/anstjswls2019/AndroidStudioProjects/GoogleMapTest/app/src/main/res/drawable/custom_btn.xml" value="0.1" />
         <entry key="..\:/Users/anstjswls2019/AndroidStudioProjects/GoogleMapTest/app/src/main/res/drawable/custom_btn2.xml" value="0.1" />
+        <entry key="..\:/Users/anstjswls2019/AndroidStudioProjects/GoogleMapTest/app/src/main/res/drawable/custom_btn_opaque.xml" value="0.197" />
         <entry key="..\:/Users/anstjswls2019/AndroidStudioProjects/GoogleMapTest/app/src/main/res/drawable/custom_edit_space2.xml" value="0.1" />
         <entry key="..\:/Users/anstjswls2019/AndroidStudioProjects/GoogleMapTest/app/src/main/res/drawable/custom_editspace.xml" value="0.1" />
         <entry key="..\:/Users/anstjswls2019/AndroidStudioProjects/GoogleMapTest/app/src/main/res/drawable/custom_line_white.xml" value="0.1" />
+        <entry key="..\:/Users/anstjswls2019/AndroidStudioProjects/GoogleMapTest/app/src/main/res/drawable/custom_round_button.xml" value="0.1635" />
+        <entry key="..\:/Users/anstjswls2019/AndroidStudioProjects/GoogleMapTest/app/src/main/res/drawable/custom_search_view.xml" value="0.259" />
         <entry key="..\:/Users/anstjswls2019/AndroidStudioProjects/GoogleMapTest/app/src/main/res/drawable/ic_baseline_check_box_24.xml" value="0.1" />
         <entry key="..\:/Users/anstjswls2019/AndroidStudioProjects/GoogleMapTest/app/src/main/res/drawable/ic_baseline_done_outline_24.xml" value="0.1" />
         <entry key="..\:/Users/anstjswls2019/AndroidStudioProjects/GoogleMapTest/app/src/main/res/drawable/ic_baseline_email_24.xml" value="0.1" />
@@ -20,19 +23,17 @@
         <entry key="..\:/Users/anstjswls2019/AndroidStudioProjects/GoogleMapTest/app/src/main/res/layout/activity_loading.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/anstjswls2019/AndroidStudioProjects/GoogleMapTest/app/src/main/res/layout/activity_login.xml" value="0.264" />
         <entry key="..\:/Users/anstjswls2019/AndroidStudioProjects/GoogleMapTest/app/src/main/res/layout/activity_main.xml" value="0.25364583333333335" />
-        <entry key="..\:/Users/anstjswls2019/AndroidStudioProjects/GoogleMapTest/app/src/main/res/layout/activity_record.xml" value="0.2" />
-        <entry key="..\:/Users/anstjswls2019/AndroidStudioProjects/GoogleMapTest/app/src/main/res/layout/activity_search_mount.xml" value="0.2" />
-        <entry key="..\:/Users/anstjswls2019/AndroidStudioProjects/GoogleMapTest/app/src/main/res/layout/activity_sign_up.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/anstjswls2019/AndroidStudioProjects/GoogleMapTest/app/src/main/res/layout/activity_record.xml" value="0.264" />
+        <entry key="..\:/Users/anstjswls2019/AndroidStudioProjects/GoogleMapTest/app/src/main/res/layout/activity_search_mount.xml" value="0.264" />
+        <entry key="..\:/Users/anstjswls2019/AndroidStudioProjects/GoogleMapTest/app/src/main/res/layout/activity_sign_up.xml" value="0.264" />
         <entry key="..\:/Users/anstjswls2019/AndroidStudioProjects/GoogleMapTest/app/src/main/res/layout/activity_splash.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/anstjswls2019/AndroidStudioProjects/GoogleMapTest/app/src/main/res/layout/activity_start_mount.xml" value="0.264" />
         <entry key="app/src/main/res/layout/activity_loading.xml" value="0.3039896647135417" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.2614852905273438" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.18840579710144928" />
-        <entry key="app/src/main/res/layout/activity_search_mount.xml" value="0.15520833333333334" />
         <entry key="app/src/main/res/layout/activity_sigin_up.xml" value="0.15625" />
         <entry key="app/src/main/res/layout/activity_sign_up.xml" value="0.23731884057971014" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.17135416666666667" />
-        <entry key="app/src/main/res/layout/activity_start_mount.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1875" />
       </map>
     </option>

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/mount2"
     tools:context=".RecordActivity">
 
     <TextView
@@ -11,9 +12,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="10dp"
         android:fontFamily="@font/aclonica"
+        android:shadowColor="#000000"
+        android:shadowDx="7.0"
+        android:shadowDy="7.0"
+        android:shadowRadius="7.0"
         android:text="Record Of Mine"
+        android:textColor="@color/darkgreen"
         android:textSize="45dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.413"
@@ -24,7 +31,7 @@
         android:id="@+id/constraintLayout"
         android:layout_width="0dp"
         android:layout_height="450dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="50dp"
         android:layout_marginBottom="35dp"
         android:background="@drawable/custom_edit_space2"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -135,10 +142,13 @@
         android:layout_height="wrap_content"
 
         android:layout_marginTop="15dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="5dp"
         android:layout_marginBottom="15dp"
+        android:background="@drawable/custom_round_button"
         android:fontFamily="@font/aclonica"
         android:text="Main"
+
+        android:textColor="@color/darkgreen"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

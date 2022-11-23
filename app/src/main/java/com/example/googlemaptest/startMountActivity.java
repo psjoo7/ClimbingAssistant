@@ -41,7 +41,7 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        mname = findViewById(R.id.mountName);
+        mname = findViewById(R.id.start);
         mname.setText(MountName);
         long start = System.currentTimeMillis();
         long end = System.currentTimeMillis();
