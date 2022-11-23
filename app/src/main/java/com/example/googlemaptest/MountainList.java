@@ -5,15 +5,15 @@ import com.google.firebase.database.IgnoreExtraProperties;
 @IgnoreExtraProperties
 public class MountainList {
     public String end;
-    public String length;
-    public String maxHeight;
+    public Long length;
+    public Long maxHeight;
     public String mname;
     public String path;
     public String starting;
 
     public MountainList(){}
 
-    public MountainList(String end, String length, String maxHeight, String mname, String path, String starting){
+    public MountainList(String end, Long length, Long maxHeight, String mname, String path, String starting){
         this.end = end;
         this.length = length;
         this.maxHeight = maxHeight;

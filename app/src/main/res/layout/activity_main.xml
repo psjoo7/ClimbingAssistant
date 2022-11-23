@@ -14,7 +14,7 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="406dp"
-        tools:context=".mainfragment"></fragment>
+        />
 
     <TextView
         android:id="@+id/Location_log"

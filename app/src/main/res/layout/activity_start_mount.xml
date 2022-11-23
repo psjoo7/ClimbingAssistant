@@ -14,7 +14,7 @@
         android:text="STOP"
         app:layout_constraintBottom_toBottomOf="@+id/mountName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/mountName"></androidx.appcompat.widget.AppCompatButton>
+        app:layout_constraintStart_toEndOf="@+id/mountName" />
 
     <fragment
         android:id="@+id/map"
