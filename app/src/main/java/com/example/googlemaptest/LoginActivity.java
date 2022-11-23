@@ -39,9 +39,8 @@ public class LoginActivity extends AppCompatActivity {
         mFirebaseAuth = FirebaseAuth.getInstance();
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("UserInfo");
 
-//        // 타이틀바 삭제
-//        ActionBar actionBar = getSupportActionBar();
-//        actionBar.hide();
+        // 타이틀바 삭제
+
 
         Intent intent = new Intent(this, LoadingActivity.class);
         startActivity(intent);
@@ -78,13 +77,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
-                startActivity(intent);
-            }
-        });
-        ManageBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, startMountActivity.class);
                 startActivity(intent);
             }
         });
