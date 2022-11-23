@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
+import android.widget.Chronometer;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -28,7 +30,8 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
     private DatabaseReference mData, mRef;
     private String path;
     private GoogleMap mMap;
-    private TextView mname, timer;
+    private TextView mname;
+    private Chronometer stopWatch;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,10 +46,33 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
 
         mname = findViewById(R.id.start);
         mname.setText(MountName);
-        long start = System.currentTimeMillis();
-        long end = System.currentTimeMillis();
-        timer = findViewById(R.id.Time);
-        timer.setText(String.valueOf((end-start)/1000));
+        Chronometer stopWatch  = (Chronometer) findViewById(R.id.chronometer);
+        stopWatch.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener(){
+            @Override
+            public void onChronometerTick(Chronometer cArg) {
+                long time = SystemClock.elapsedRealtime() - cArg.getBase();
+
+                cArg.setText(timeHandler(time,stopWatch));
+            }
+        });
+        long currentTime =  SystemClock.elapsedRealtime() - stopWatch.getBase();
+        String time1 = timeHandler(currentTime, stopWatch);
+        stopWatch.setBase(SystemClock.elapsedRealtime());
+        stopWatch.start();
+    }
+
+    public String timeHandler(long time, Chronometer stopWatch)
+    {
+        long currentTime =  SystemClock.elapsedRealtime() - stopWatch.getBase();
+
+        int h = (int)(currentTime / 3600000);
+        int m = (int)(currentTime - h * 3600000) / 60000;
+        int s = (int)(currentTime - h * 3600000 - m * 60000) / 1000 ;
+
+        String hh = h < 10 ? "0"+h: h+"";
+        String mm = m < 10 ? "0"+m: m+"";
+        String ss = s < 10 ? "0"+s: s+"";
+        return hh+":"+mm+":"+ss;
     }
 
     @Override
@@ -60,7 +86,7 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                MountainList mountInfo = snapshot.getValue(MountainList.class);
+                MountElement mountInfo = snapshot.getValue(MountElement.class);
                 String startPoint = mountInfo.starting;
                 String endPoint = mountInfo.end;
                 String[] startPointSplit = startPoint.split(" ");
@@ -85,6 +111,7 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
             }
         });
     }
+
 
     public void drawLine(GoogleMap Map , String path){
         PolylineOptions polylineOptions = new PolylineOptions();

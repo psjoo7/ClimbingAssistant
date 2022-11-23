@@ -3,22 +3,27 @@ package com.example.googlemaptest;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 @IgnoreExtraProperties
-public class MountainList {
+public class MountElement implements Comparable<MountElement>{
     public String end;
     public Long length;
-    public Long maxHeight;
+    public Integer maxHeight;
     public String mname;
     public String path;
     public String starting;
 
-    public MountainList(){}
+    public MountElement(){}
 
-    public MountainList(String end, Long length, Long maxHeight, String mname, String path, String starting){
+    public MountElement(String end, Long length, Integer maxHeight, String mname, String path, String starting){
         this.end = end;
         this.length = length;
         this.maxHeight = maxHeight;
         this.mname = mname;
         this.path = path;
         this.starting = starting;
+    }
+
+    @Override
+    public int compareTo(MountElement mountElement) {
+        return this.maxHeight.compareTo(mountElement.maxHeight);
     }
 }

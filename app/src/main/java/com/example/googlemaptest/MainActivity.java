@@ -13,7 +13,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -26,7 +25,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -44,7 +42,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -57,10 +54,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.GeoPoint;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -140,6 +139,7 @@ public class MainActivity extends AppCompatActivity
         ChildEventListener mChildEventListener;
         mMount.push().setValue(marker);
 
+
     }
 
     int JSONParse(String jsonStr) {
@@ -211,10 +211,15 @@ public class MainActivity extends AppCompatActivity
 
             startLocationUpdates(); // 3. 위치 업데이트 시작
             mMount.addListenerForSingleValueEvent(new ValueEventListener() {
+                List<MountElement> mount = new ArrayList<>();
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                        MountainList mount_each = snapshot.getValue(MountainList.class);
+                        MountElement mount_each = snapshot.getValue(MountElement.class);
+                        try {
+                            mount.add(mount_each);
+                        }
+                        catch (NullPointerException e){}
                         Log.d("MainActivity", "ValueEventListener : " + mount_each.mname);
                         String endPoint = mount_each.end;
                         String[] endPointSplit = endPoint.split(" ");
@@ -226,18 +231,32 @@ public class MainActivity extends AppCompatActivity
                         mMap.addMarker(new MarkerOptions().position(latLng).title(mount_each.mname).snippet(String.valueOf(mount_each.maxHeight)));
                         mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
                     }
+//                    System.out.println("aaaaaaaa");
+//                    for(int i = 0 ; i < mount.size(); i++){
+//                        System.out.print(mount.get(i).mname + " ");
+//                    }
+//                    System.out.println();
+//                    try {
+//                        Arrays.sort(new List[]{mount});
+//                    }
+//                    catch (NullPointerException e){
+//                        System.out.println(e);
+//                    }
+//                    for(int i = 0 ; i < mount.size(); i++){
+//                        System.out.print(mount.get(i).mname + " ");
+//                    }
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
 
                 }
+
             });
 
             mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(37.52487,126.92723)));
             //marker click event --> onMarkerClick func
             mMap.setOnMarkerClickListener(this);
-
 
         }else {  //2. 퍼미션 요청을 허용한 적이 없다면 퍼미션 요청이 필요합니다. 2가지 경우(3-1, 4-1)가 있습니다.
 
@@ -460,8 +479,8 @@ public class MainActivity extends AppCompatActivity
         markerOptions.draggable(true);
 //        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
         currentMarker = mMap.addMarker(markerOptions);
-//        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(DEFAULT_LOCATION, 5);
-//        mMap.moveCamera(cameraUpdate);
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(DEFAULT_LOCATION, 5);
+        mMap.moveCamera(cameraUpdate);
 
     }
 

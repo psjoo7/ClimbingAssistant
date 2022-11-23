@@ -4,181 +4,136 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import java.lang.Thread;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentSender;
 import android.content.pm.PackageManager;
-import android.net.Uri;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
-import android.provider.Settings;
+import android.os.Looper;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
+import com.google.android.material.snackbar.Snackbar;
 
-import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationAvailability;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationSettingsRequest;
-import com.google.android.gms.location.LocationSettingsResponse;
-import com.google.android.gms.location.LocationSettingsStatusCodes;
-import com.google.android.gms.location.SettingsClient;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
 
-public class SplashActivity extends AppCompatActivity {
-    private static final String TAG = SplashActivity.class.getSimpleName();
-    private static final int GPS_UTIL_LOCATION_PERMISSION_REQUEST_CODE = 100;
-    private static final int GPS_UTIL_LOCATION_RESOLUTION_REQUEST_CODE = 101;
+public class SplashActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
 
-    public static final int DEFAULT_LOCATION_REQUEST_PRIORITY = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY;
-    public static final long DEFAULT_LOCATION_REQUEST_INTERVAL = 20000L;
-    public static final long DEFAULT_LOCATION_REQUEST_FAST_INTERVAL = 10000L;
+    private FusedLocationProviderClient mFusedLocationClient;
+    private int coarsePermission;
+    private int finePermission;
+    boolean check_result = false;
+    private static final int GPS_ENABLE_REQUEST_CODE = 300;
+    private static final int PERMISSIONS_REQUEST_CODE = 200;
+    private View mLayout;
+    private TextView t;
+    // 앱을 실행하기 위해 필요한 퍼미션을 정의합니다.
+    String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION};
 
-    private FusedLocationProviderClient fusedLocationProviderClient;
-    private LocationRequest locationRequest;
-    private double longitude, latitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
-    }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        checkLocationPermission();
-    }
+        //checkSelfPermission : 사용자가 권한을 허용했는지 체크. 허용했다면 PERMISSION_GRANTED 거부했다면 PERMISSION_DENIED
+        coarsePermission = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION);
+        finePermission = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
 
-    private void checkLocationPermission() {
-        int accessLocation = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
-        if (accessLocation == PackageManager.PERMISSION_GRANTED) {
-            checkLocationSetting();
-        } else {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, GPS_UTIL_LOCATION_PERMISSION_REQUEST_CODE);
-        }
-    }
+        setContentView(R.layout.activity_main);
+        // 위치정보를 제공하는 클라이언트 객체
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == GPS_UTIL_LOCATION_PERMISSION_REQUEST_CODE) {
-            for (int i = 0; i < permissions.length; i++) {
-                if (Manifest.permission.ACCESS_FINE_LOCATION.equals(permissions[i])) {
-                    if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
-                        checkLocationSetting();
-                    } else {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                        builder.setTitle("위치 권한이 꺼져있습니다.");
-                        builder.setMessage("[권한] 설정에서 위치 권한을 허용해야 합니다.");
-                        builder.setPositiveButton("설정으로 가기", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent();
-                                intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                                Uri uri = Uri.fromParts("package", getPackageName(), null);
-                                intent.setData(uri);
-                                startActivity(intent);
-                            }
-                        }).setNegativeButton("종료", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                finish();
-                            }
-                        });
-                        AlertDialog alert = builder.create();
-                        alert.show();
-                    }
-                    break;
-                }
-            }
-        }
-    }
-
-    private void checkLocationSetting() {
-        locationRequest = LocationRequest.create();
-        locationRequest.setPriority(DEFAULT_LOCATION_REQUEST_PRIORITY);
-        locationRequest.setInterval(DEFAULT_LOCATION_REQUEST_INTERVAL);
-        locationRequest.setFastestInterval(DEFAULT_LOCATION_REQUEST_FAST_INTERVAL);
-
-        SettingsClient settingsClient = LocationServices.getSettingsClient(this);
-        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder().addLocationRequest(locationRequest).setAlwaysShow(true);
-        settingsClient.checkLocationSettings(builder.build())
-                .addOnSuccessListener(this, new OnSuccessListener<LocationSettingsResponse>() {
+        mFusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
                     @Override
-                    public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
-                        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(SplashActivity.this);
-                        if (ActivityCompat.checkSelfPermission(SplashActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(SplashActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                            // TODO: Consider calling
-                            //    ActivityCompat#requestPermissions
-                            // here to request the missing permissions, and then overriding
-                            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                            //                                          int[] grantResults)
-                            // to handle the case where the user grants the permission. See the documentation
-                            // for ActivityCompat#requestPermissions for more details.
-                            return;
-                        }
-                        fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, null);
-                    }
-                })
-                .addOnFailureListener(SplashActivity.this, new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        int statusCode = ((ApiException) e).getStatusCode();
-                        switch (statusCode) {
-                            case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
-                                try {
-                                    ResolvableApiException rae = (ResolvableApiException) e;
-                                    rae.startResolutionForResult(SplashActivity.this, GPS_UTIL_LOCATION_RESOLUTION_REQUEST_CODE);
-                                } catch (IntentSender.SendIntentException sie) {
-                                    Log.w(TAG, "unable to start resolution for result due to " + sie.getLocalizedMessage());
-                                }
-                                break;
-                            case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
-                                String errorMessage = "location settings are inadequate, and cannot be fixed here. Fix in Settings.";
-                                Log.e(TAG, errorMessage);
+                    public void onSuccess(Location location) {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+                            Log.d("location","Lng : " + String.valueOf(location.getLongitude()) +" Lat : "+ String.valueOf(location.getLatitude()));
                         }
                     }
                 });
+        mLayout = findViewById(R.id.layout_main);
+        requestPermissions(REQUIRED_PERMISSIONS,200);
+
+
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    public void onRequestPermissionsResult(int permsRequestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grandResults) {
+        super.onRequestPermissionsResult(200,REQUIRED_PERMISSIONS,grandResults);
+        if ( permsRequestCode == PERMISSIONS_REQUEST_CODE && grandResults.length == REQUIRED_PERMISSIONS.length) {
 
-        if (requestCode == GPS_UTIL_LOCATION_RESOLUTION_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                checkLocationSetting();
-            } else {
-                finish();
+            // 요청 코드가 PERMISSIONS_REQUEST_CODE 이고, 요청한 퍼미션 개수만큼 수신되었다면
+
+            check_result = true;
+
+
+            // 모든 퍼미션을 허용했는지 체크합니다.
+
+            for (int result : grandResults) {
+                if (result != PackageManager.PERMISSION_GRANTED) {
+                    check_result = false;
+                    break;
+                }
             }
+
+
+            if ( check_result ) {
+
+
+                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                startActivity(intent);
+
+            }
+            else {
+                // 거부한 퍼미션이 있다면 앱을 사용할 수 없는 이유를 설명해주고 앱을 종료합니다.2 가지 경우가 있습니다.
+
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, REQUIRED_PERMISSIONS[0])
+                        || ActivityCompat.shouldShowRequestPermissionRationale(this, REQUIRED_PERMISSIONS[1])) {
+
+
+                    // 사용자가 거부만 선택한 경우에는 앱을 다시 실행하여 허용을 선택하면 앱을 사용할 수 있습니다.
+                    Snackbar.make(mLayout, "퍼미션이 거부되었습니다. 앱을 다시 실행하여 퍼미션을 허용해주세요. ",
+                            Snackbar.LENGTH_INDEFINITE).setAction("확인", new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View view) {
+
+                            finish();
+                        }
+                    }).show();
+
+                }else {
+
+
+                    // "다시 묻지 않음"을 사용자가 체크하고 거부를 선택한 경우에는 설정(앱 정보)에서 퍼미션을 허용해야 앱을 사용할 수 있습니다.
+                    Snackbar.make(mLayout, "퍼미션이 거부되었습니다. 설정(앱 정보)에서 퍼미션을 허용해야 합니다. ",
+                            Snackbar.LENGTH_INDEFINITE).setAction("확인", new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View view) {
+
+                            finish();
+                        }
+                    }).show();
+                }
+            }
+
         }
     }
 
-    private LocationCallback locationCallback = new LocationCallback() {
-        @Override
-        public void onLocationResult(LocationResult locationResult) {
-            super.onLocationResult(locationResult);
-            longitude = locationResult.getLastLocation().getLongitude();
-            latitude = locationResult.getLastLocation().getLatitude();
-            fusedLocationProviderClient.removeLocationUpdates(locationCallback);
-
-            Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-            intent.putExtra("latitude", latitude);
-            intent.putExtra("longitude", longitude);
-            startActivity(intent);
-            finish();
-        }
-
-        @Override
-        public void onLocationAvailability(LocationAvailability locationAvailability) {
-            super.onLocationAvailability(locationAvailability);
-            Log.i(TAG, "onLocationAvailability - " + locationAvailability);
-        }
-    };
 }
