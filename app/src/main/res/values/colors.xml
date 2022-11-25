@@ -11,10 +11,12 @@
     <color name="opaque">#A6FFFFFF</color>
     <color name="moreopaque">#80FFFFFF</color>
     <color name="cloud2">#CBE9E7</color>
-    <color name="cloud2opaque">#73CBE9E7</color>
+    <color name="cloud2opaque">#A6CBE9E7</color>
     <color name="background">#6F009688</color>
     <color name="soyoon">#ff669900</color>
     <color name="cloud">#FFA7C5FF</color>
     <color name="darkgreen">#09675E</color>
     <color name="gray">#CFCFCF</color>
+    <color name="lightblue">#FF9AC1D8</color>
+    <color name="lightpink">#FFFBE1E3</color>
 </resources>
