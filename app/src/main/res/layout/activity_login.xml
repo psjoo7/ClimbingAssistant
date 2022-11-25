@@ -1,113 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="@drawable/login_back"
+android:alpha="0.9">
+
+<TextView
+    android:id="@+id/textView4"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
+    android:fontFamily="@font/aclonica"
+    android:shadowColor="#000000"
+    android:shadowDx="7.0"
+    android:shadowDy="7.0"
+    android:shadowRadius="7.0"
+    android:text="Santa Tell Me"
+    android:textColor="@color/white"
+    android:textSize="48sp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0.159" />
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="match_parent"
-        android:layout_height="264dp"
-        android:layout_marginTop="100sp"
-        app:srcCompat="@drawable/cat" />
+<EditText
+    android:id="@+id/userID"
+    android:background="@drawable/login_button_custom"
+    android:layout_width="241dp"
+    android:layout_height="48dp"
+    android:drawableStart="@drawable/ic_baseline_mail_outline_24"
+    android:paddingLeft="16dp"
+    android:drawablePadding="16dp"
+    android:ems="10"
+    android:fontFamily="@font/aclonica"
+    android:hint="E-Mail"
+    android:inputType="textPersonName"
+    android:minHeight="48dp"
+    android:textColor="@color/black"
+    android:textStyle="bold"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.505"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/textView4"
+    app:layout_constraintVertical_bias="0.132"
+
+    />
+
+<EditText
+    android:id="@+id/userPwd"
+    android:layout_width="243dp"
+    android:layout_height="56dp"
+    android:paddingLeft="16dp"
+    android:background="@drawable/login_button_custom"
+    android:drawableStart="@drawable/ic_baseline_vpn_key_24"
+    android:drawablePadding="16dp"
+    android:ems="10"
+    android:fontFamily="@font/aclonica"
+    android:hint="Password"
+    android:inputType="textPersonName"
+    android:minHeight="48dp"
+    android:textStyle="bold"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.502"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/userID"
+    app:layout_constraintVertical_bias="0.077" />
+
+<LinearLayout
+    android:id="@+id/linearLayout2"
+    android:layout_width="188dp"
+    android:layout_height="48dp"
+    android:layout_marginTop="60dp"
+    android:orientation="horizontal"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.497"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/userPwd">
+
+    <Button
+        android:id="@+id/JoinButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="#00ffffff"
+        android:fontFamily="@font/aclonica"
+        android:shadowColor="#000000"
+        android:shadowDx="7.0"
+        android:shadowDy="7.0"
+        android:shadowRadius="7.0"
+        android:text="join"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/ManageButton"
-        android:layout_width="111dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="150sp"
-        android:layout_marginTop="590sp"
-        android:backgroundTint="@color/teal_700"
+        android:layout_weight="1"
+        android:background="#00ffffff"
         android:fontFamily="@font/aclonica"
-        android:text="Manage Mode"
-        android:textAlignment="center"
-        android:textSize="12sp" />
+        android:shadowColor="#000000"
+        android:shadowDx="7.0"
+        android:shadowDy="7.0"
+        android:shadowRadius="7.0"
+        android:text="Find Id"
+        android:textStyle="bold" />
+</LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="587dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_centerInParent="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="0dp"
-        android:orientation="vertical">
+<androidx.appcompat.widget.AppCompatButton
+    android:id="@+id/LoginButton"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/button_back"
+    android:fontFamily="@font/aclonica"
+    android:shadowColor="#000000"
+    android:shadowDx="7.0"
+    android:shadowDy="7.0"
+    android:shadowRadius="7.0"
+    android:text="LOGIN"
+    android:textColor="@color/white"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.498"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+    app:layout_constraintVertical_bias="0.247" />
 
-        <TextView
-            android:id="@+id/Apptitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0sp"
-            android:fontFamily="@font/aclonica"
-            android:text="@string/apptitle"
-            android:textAlignment="center"
-            android:textColor="#009688"
-            android:textSize="48sp"
-            android:textStyle="bold|italic" />
-
-        <EditText
-            android:id="@+id/userID"
-            android:layout_width="266sp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="80sp"
-            android:layout_marginTop="270sp"
-            android:ems="10"
-            android:fontFamily="@font/aclonica"
-            android:hint="@string/Loginid"
-            android:inputType="text"
-            android:textSize="20sp"
-            android:textStyle="bold|italic" />
-
-        <EditText
-            android:id="@+id/userPwd"
-            android:layout_width="266sp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="80sp"
-            android:layout_marginTop="30sp"
-            android:ems="10"
-            android:fontFamily="@font/aclonica"
-            android:hint="@string/Loginpw"
-            android:inputType="textPassword"
-            android:textSize="20sp"
-            android:textStyle="bold|italic" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0sp"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/JoinButton"
-                android:layout_width="118dp"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginLeft="80sp"
-                android:layout_marginTop="20sp"
-                android:backgroundTint="@color/teal_700"
-                android:fontFamily="@font/aclonica"
-                android:text="@string/JoinButton"
-                android:textSize="16sp" />
-
-            <Button
-                android:id="@+id/LoginButton"
-                android:layout_width="118sp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10sp"
-                android:layout_marginTop="20sp"
-                android:backgroundTint="@color/teal_700"
-                android:fontFamily="@font/aclonica"
-                android:text="Login"
-                android:textSize="18sp" />
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
