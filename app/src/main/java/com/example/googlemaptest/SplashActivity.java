@@ -50,7 +50,7 @@ public class SplashActivity extends AppCompatActivity implements ActivityCompat.
         coarsePermission = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION);
         finePermission = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_splash);
         // 위치정보를 제공하는 클라이언트 객체
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
