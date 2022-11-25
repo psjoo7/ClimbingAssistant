@@ -30,7 +30,7 @@
         android:layout_width="411dp"
         android:layout_height="450dp"
         android:layout_marginTop="50dp"
-        android:background="@drawable/custom_search_view"
+        android:background="@drawable/custom_buleline_opaque"
         android:paddingVertical="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
