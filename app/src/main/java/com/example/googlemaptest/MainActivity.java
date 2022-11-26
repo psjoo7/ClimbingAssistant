@@ -19,6 +19,9 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -27,7 +30,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.maps.CameraUpdate;
@@ -47,12 +52,19 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 
 public class MainActivity extends AppCompatActivity
@@ -65,6 +77,7 @@ public class MainActivity extends AppCompatActivity
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int UPDATE_INTERVAL_MS = 1000;  // 1초
     private static final int FASTEST_UPDATE_INTERVAL_MS = 500; // 0.5초
+    LinkedList<Location> location_info = new LinkedList<>();
 
 
 
@@ -217,8 +230,6 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-
-
     private void startLocationUpdates() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -259,17 +270,6 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-
-
-    public void drawLine(GoogleMap map, LinkedList<Location> l)
-    {
-        PolylineOptions polylineOptions = new PolylineOptions();
-        for(int i=0; i<l.size() ; i++)
-        {
-            polylineOptions.add(new LatLng(l.get(i).getLatitude(),l.get(i).getLongitude()));
-        }
-        Polyline polyline = map.addPolyline(polylineOptions);
-    }
 
     @Override
     public boolean onMarkerClick(@NonNull Marker marker) {
