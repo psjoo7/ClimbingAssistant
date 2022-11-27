@@ -25,6 +25,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -81,11 +82,10 @@ public class MainActivity extends AppCompatActivity
     private Location location, loc_current;
     private FragmentManager fragmentmanager;
     private FragmentTransaction transaction;
-    private TextView location_log;
-    private TextView isOK;
     private Button done, update;
     private DatabaseReference mMount;
     private ChildEventListener mChildEventListener;
+    private LinearLayout mountainList;
 
     Marker marker;
 
@@ -128,16 +128,14 @@ public class MainActivity extends AppCompatActivity
         else
         {
             loc_current = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
         }
-
         // 1. updateBtn 클릭하면 현재 내 좌표 받아온다. (lat, lng)
         // 2. 산 리스트에 있는 모든 산과 거리 비교 후 산 리스트를 거리순으로 정렬
+        mountainList = (LinearLayout) findViewById(R.id.mountainList);
         update.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view)
             {
-//                float[] currentloc = new float[mount.size()];
                 double lat = loc_current.getLatitude();
                 double lng = loc_current.getLongitude();
                 Log.d("LLL","lat : "+lat +" lng : "+lng);
@@ -151,25 +149,26 @@ public class MainActivity extends AppCompatActivity
                 Log.d("after",mount.toString());
 
                 //여기에 카드뷰 추가하는 코드 추가하면 끝날듯.
+                for(int i=0; i<mount.size();i++) {
+                    final TextView mountain = new TextView(getBaseContext());
+                    mountain.setText(mount.get(i).mname);
+                    mountainList.addView(mountain);
+                    mountain.setOnClickListener(new View.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(View v)
+                        {
+                            Log.e("mName",""+mountain.getText());
+                            Intent intent = new Intent(MainActivity.this, SearchMountActivity.class);
+                            intent.putExtra("MountName", String.valueOf(mountain.getText()));
+                            startActivity(intent);
+                        }
+                    });
+
+                }
             }
         });
 
-    }
-    int JSONParse(String jsonStr) {
-        StringBuilder stringBuilder = new StringBuilder();
-
-        try {
-            JSONArray jsonArray = new JSONArray(jsonStr);
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                int elevation = jsonObject.getInt("elevation");
-                return elevation;
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return 0;
-        }
-        return 1;
     }
 
     @Override
@@ -262,27 +261,13 @@ public class MainActivity extends AppCompatActivity
                 currentPosition
                         = new LatLng(location.getLatitude(), location.getLongitude());
 
-                String markerTitle = getCurrentAddress(currentPosition);
-                String markerSnippet = "위도:" + String.valueOf(location.getLatitude())
-                        + " 경도:" + String.valueOf(location.getLongitude());
 
-                String Lat1 = String.valueOf(location.getLatitude());
-                String Long1 = String.valueOf(location.getLongitude());
 
-                Log.d(TAG, "onLocationResult : " + markerSnippet);
 
                 //현재 위치에 마커 생성하고 이동
-                setCurrentLocation(location, markerTitle, markerSnippet);
-
-                mCurrentLocatiion = location;
 
                 String.valueOf(location.getLatitude());
-
                 PolylineOptions polylineOptions = new PolylineOptions();
-                if (location_info.size() > 20) {
-                    drawLine(mMap, location_info);
-                    Log.d(TAG, "onLocationResult: 그림그렸다");
-                }
             }
         }
     };

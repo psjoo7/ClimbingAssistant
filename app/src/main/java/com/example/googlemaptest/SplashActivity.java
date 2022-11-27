@@ -64,7 +64,7 @@ public class SplashActivity extends AppCompatActivity implements ActivityCompat.
                         }
                     }
                 });
-        mLayout = findViewById(R.id.layout_main);
+//        mLayout = findViewById(R.id.layout_main);
         requestPermissions(REQUIRED_PERMISSIONS,200);
 
 
