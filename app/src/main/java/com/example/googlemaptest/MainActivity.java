@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -13,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -21,9 +21,6 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -48,7 +45,6 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -58,16 +54,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
-
-import okhttp3.Response;
-import okhttp3.Request;
-import okhttp3.OkHttpClient;
 
 
 public class MainActivity extends AppCompatActivity
@@ -85,15 +75,15 @@ public class MainActivity extends AppCompatActivity
     Location mCurrentLocatiion;
     LatLng currentPosition;
 
-
+    List<MountElement> mount = new ArrayList<>();
     private FusedLocationProviderClient mFusedLocationClient;
     private LocationRequest locationRequest;
-    private Location location;
+    private Location location, loc_current;
     private FragmentManager fragmentmanager;
     private FragmentTransaction transaction;
     private TextView location_log;
     private TextView isOK;
-    private Button done;
+    private Button done, setLocationBtn;
     private DatabaseReference mMount;
     private ChildEventListener mChildEventListener;
     Marker marker;
@@ -121,6 +111,8 @@ public class MainActivity extends AppCompatActivity
 
         builder.addLocationRequest(locationRequest);
 
+        LocationManager lm =(LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -130,9 +122,64 @@ public class MainActivity extends AppCompatActivity
         ChildEventListener mChildEventListener;
         mMount.push().setValue(marker);
 
+        setLocationBtn = findViewById(R.id.setLocationBtn);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Log.d("PERMISSION","위치권한을 확인하세요");
+        }
+        else
+        {
+            loc_current = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+        }
+
+        // 1. updateBtn 클릭하면 현재 내 좌표 받아온다. (lat, lng)
+        // 2. 산 리스트에 있는 모든 산과 거리 비교 후 산 리스트를 거리순으로 정렬
+        setLocationBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view)
+            {
+//                float[] currentloc = new float[mount.size()];
+                double lat = loc_current.getLatitude();
+                double lng = loc_current.getLongitude();
+                Log.d("LLL","lat : "+lat +" lng : "+lng);
+                int idx = 0;
+                for(int i=0; i<mount.size(); i++)
+                {
+                    mount.get(i).setDistance(lat, lng);
+//                    String end = mount.get(i).end;
+//                    Log.d("aaaaaa", "aaaa : " +mount.get(i).end + " " + lng + " " + lat);
+//                    String[] endPointSplit = end.split(" ");
+//                    Double lag = Double.parseDouble(endPointSplit[0]);
+//                    Double log = Double.parseDouble(endPointSplit[1]);
+//                    Location location1 = new Location("newloc");
+//                    location1.setLatitude(lag);
+//                    location1.setLongitude(log);
+//                    Location.distanceBetween(lat, lng, lag, log, currentloc);
+//                    Log.d("currentloc", "currentloc : " + currentloc[0]);
+//                    mount.get(i).realdist = location.distanceTo(location1)/1000;
+//                    mount.get(i).realdist = getDistance(lng, lat, lag, log);
+//                    Log.d("disdis","distance : "+ mount.get(i).realdist + " index : "+ idx++);
+
+                }
+//                Log.d("currentloc", "currentloc : " + currentloc[0]);
+                Log.d("before",mount.toString());
+                Collections.sort(mount);
+                Log.d("after",mount.toString());
+
+                //여기에 카드뷰 추가하는 코드 추가하면 끝날듯.
+            }
+        });
 
     }
 
+    Double getDistance(Double lat1, Double lng1, Double lat2, Double lng2){
+        Double R = 6372.8 * 1000;
+        Double dLat = Math.toRadians(lat2 - lat1);
+        Double dLng = Math.toRadians(lng2 - lng1);
+        Double a = Math.pow((Math.sin(dLat / 2)), 2) + Math.pow((Math.sin(dLng / 2)), 2) * Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2));
+        Double c = 2 * Math.asin(Math.sqrt(a));
+        return R * c;
+    }
     int JSONParse(String jsonStr) {
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -162,24 +209,27 @@ public class MainActivity extends AppCompatActivity
 
         startLocationUpdates(); // 3. 위치 업데이트 시작
         mMount.addListenerForSingleValueEvent(new ValueEventListener() {
-            List<MountElement> mount = new ArrayList<>();
             int x = 0;
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     MountElement mount_each = snapshot.getValue(MountElement.class);
                     MountElement eMount = new MountElement(mount_each.end, mount_each.length, mount_each.maxHeight, mount_each.mname, mount_each.path, mount_each.starting, x++);
-                    try {
-                        mount.add(eMount);
-                    } catch (NullPointerException e) {
-                    }
-                    Log.d("MainActivity", "ValueEventListener : " + mount_each.mname);
                     String endPoint = mount_each.end;
                     String[] endPointSplit = endPoint.split(" ");
                     Log.d("MainActivity", "ValueEventListener : " + endPointSplit[0]);
                     Log.d("MainActivity", "ValueEventListener : " + endPointSplit[1]);
                     Double lag = Double.parseDouble(endPointSplit[0]);
                     Double log = Double.parseDouble(endPointSplit[1]);
+//                    Location location1 = new Location("emount");
+//                    location1.setLatitude(lag);
+//                    location1.setLongitude(log);
+//                    eMount.realdist = location.distanceTo(location1);
+                    try {
+                        mount.add(eMount);
+                    } catch (NullPointerException e) {
+                    }
+                    Log.d("MainActivity", "ValueEventListener : " + mount_each.mname);
                     LatLng latLng = new LatLng(log, lag);
                     mMap.addMarker(new MarkerOptions().position(latLng).title(mount_each.mname).snippet(String.valueOf(mount_each.maxHeight)));
                     mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
@@ -187,6 +237,8 @@ public class MainActivity extends AppCompatActivity
                     System.out.println("aaaaaaaa1");
                     for(int i = 0 ; i < mount.size(); i++){
                         System.out.print(mount.get(i).mname + " ");
+                        System.out.println();
+                        System.out.print(mount.get(i).realdist + " ");
                     }
                     System.out.println();
 
