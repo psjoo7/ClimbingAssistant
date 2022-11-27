@@ -31,6 +31,7 @@ public class SearchMountActivity extends AppCompatActivity implements OnMapReady
     private String MountName;
     private String path;
     private Button startBtn, backBtn;
+    private double MaxHeight;
     private TextView info1, info2, info3, name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +53,7 @@ public class SearchMountActivity extends AppCompatActivity implements OnMapReady
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(SearchMountActivity.this, startMountActivity.class);
-                intent.putExtra("MountName", MountName);
+                intent.putExtra("MountName", MountName+","+MaxHeight);
                 startActivity(intent);
             }
         });
@@ -97,6 +98,7 @@ public class SearchMountActivity extends AppCompatActivity implements OnMapReady
                 path = mountInfo.path;
                 info1.setText("Mountain Name : " + mountInfo.mname);
                 info2.setText("Max Height : " + String.valueOf(mountInfo.maxHeight) + "Meter");
+                MaxHeight = mountInfo.maxHeight;
                 info3.setText("Hiking Distance : " + String.valueOf(mountInfo.length) + "Kilometer");
                 Log.d("startpath", "getIntent1 "+ path);
                 drawLine(mMap, path);
