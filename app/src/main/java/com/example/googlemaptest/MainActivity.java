@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity
     private DatabaseReference mMount;
     private ChildEventListener mChildEventListener;
     private LinearLayout mountainList;
+    public double MaxHeight;
     private String UserID;
 
     Marker marker;
@@ -195,11 +196,20 @@ public class MainActivity extends AppCompatActivity
                     MountElement mount_each = snapshot.getValue(MountElement.class);
                     MountElement eMount = new MountElement(mount_each.end, mount_each.length, mount_each.maxHeight, mount_each.mname, mount_each.path, mount_each.starting, x++);
                     String endPoint = mount_each.end;
+                    if(mount_each.maxHeight != null)
+                    {
+                        MaxHeight = mount_each.maxHeight;
+
+                    }
                     String[] endPointSplit = endPoint.split(" ");
                     Log.d("MainActivity", "ValueEventListener : " + endPointSplit[0]);
                     Log.d("MainActivity", "ValueEventListener : " + endPointSplit[1]);
                     Double lag = Double.parseDouble(endPointSplit[0]);
                     Double log = Double.parseDouble(endPointSplit[1]);
+//                    Location location1 = new Location("emount");
+//                    location1.setLatitude(lag);
+//                    location1.setLongitude(log);
+//                    eMount.realdist = location.distanceTo(location1);
                     try {
                         mount.add(eMount);
                     } catch (NullPointerException e) {
@@ -307,6 +317,14 @@ public class MainActivity extends AppCompatActivity
         if (mMap!=null)
                 mMap.setMyLocationEnabled(true);
         mFusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null);
+//        if (checkPermission()) {
+//
+//            Log.d(TAG, "onStart : call mFusedLocationClient.requestLocationUpdates");
+//            mFusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null);
+//
+//            if (mMap!=null)
+//                mMap.setMyLocationEnabled(true);
+//        }
     }
 
     @Override
