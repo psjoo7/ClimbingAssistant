@@ -45,32 +45,32 @@
             <LinearLayout
                 android:id="@+id/mountainList"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="300dp"
                 android:orientation="vertical">
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/update"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/custom_register_button"
+                    android:fontFamily="@font/aclonica"
+                    android:shadowColor="#000000"
+                    android:shadowDx="7.0"
+                    android:shadowDy="7.0"
+                    android:shadowRadius="7.0"
+                    android:text="update"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+                    app:layout_constraintVertical_bias="1.0" />
+
             </LinearLayout>
 
         </ScrollView>
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/update"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/custom_register_button"
-            android:fontFamily="@font/aclonica"
-            android:shadowColor="#000000"
-            android:shadowDx="7.0"
-            android:shadowDy="7.0"
-            android:shadowRadius="7.0"
-            android:text="update"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/scrollView2"
-            app:layout_constraintVertical_bias="1.0" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
