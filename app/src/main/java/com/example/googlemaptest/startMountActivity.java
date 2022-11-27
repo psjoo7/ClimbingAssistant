@@ -284,7 +284,6 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
                     message.setData(bundle);
                     handler.sendMessage(message);
                     double ele1 = Double.parseDouble(ele);
-                    Log.d("ele", "ele : " + getElevation(location.getLatitude(), location.getLongitude()));
                 }).start();
 
                 String Lat1 = String.valueOf(location.getLatitude());

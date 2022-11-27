@@ -16,6 +16,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.firebase.database.DataSnapshot;
@@ -30,7 +31,7 @@ public class SearchMountActivity extends AppCompatActivity implements OnMapReady
     private String MountName;
     private String path;
     private Button startBtn, backBtn;
-    private TextView info1, info2, info3, info4;
+    private TextView info1, info2, info3, name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +46,8 @@ public class SearchMountActivity extends AppCompatActivity implements OnMapReady
         info3 = findViewById(R.id.mount_list_info3);
         Intent getMainIntent = getIntent();
         MountName = getMainIntent.getStringExtra("MountName");
+        name = findViewById(R.id.mountName);
+        name.setText(MountName);
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,13 +90,14 @@ public class SearchMountActivity extends AppCompatActivity implements OnMapReady
                 Double slog = Double.parseDouble(startPointSplit[1]);
                 LatLng latLng = new LatLng(log, lag);
                 LatLng latLng1 = new LatLng(slog, slag);
-                //mMap.addMarker(new MarkerOptions().position(latLng).title(mountInfo.mname).snippet(String.valueOf(mountInfo.maxHeight)));
-                //mMap.addMarker(new MarkerOptions().position(latLng1).title(mountInfo.mname).snippet(String.valueOf(mountInfo.maxHeight)));
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+                mMap.addMarker(new MarkerOptions().position(latLng).title(mountInfo.mname).snippet(String.valueOf(mountInfo.maxHeight)));
+                mMap.addMarker(new MarkerOptions().position(latLng1).title(mountInfo.mname).snippet(String.valueOf(mountInfo.maxHeight)));
+                LatLng midLatlng = new LatLng((log + slog) / 2, (lag + slag) / 2);
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(midLatlng, 15));
                 path = mountInfo.path;
-                info1.setText("등산 산 : " + mountInfo.mname);
-                info2.setText("최대 고도 : " + String.valueOf(mountInfo.maxHeight) + "미터");
-                info3.setText("등산 거리 : " + String.valueOf(mountInfo.distance) + "킬로미터");
+                info1.setText("Mountain Name : " + mountInfo.mname);
+                info2.setText("Max Height : " + String.valueOf(mountInfo.maxHeight) + "Meter");
+                info3.setText("Hiking Distance : " + String.valueOf(mountInfo.length) + "Kilometer");
                 Log.d("startpath", "getIntent1 "+ path);
                 drawLine(mMap, path);
             }

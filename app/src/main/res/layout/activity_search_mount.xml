@@ -11,7 +11,7 @@
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="363dp"
+        android:layout_height="300dp"
         app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -59,7 +59,7 @@
                     android:fontFamily="@font/aclonica"
                     android:padding="10dp"
                     android:text="mount_list_info"
-                    android:textSize="16dp"
+                    android:textSize="20dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
@@ -74,7 +74,7 @@
                     android:fontFamily="@font/aclonica"
                     android:padding="10dp"
                     android:text="mount_list_info2"
-                    android:textSize="16dp" />
+                    android:textSize="20dp" />
 
                 <TextView
                     android:id="@+id/mount_list_info3"
@@ -85,18 +85,7 @@
                     android:fontFamily="@font/aclonica"
                     android:padding="10dp"
                     android:text="mount_list_info3"
-                    android:textSize="16dp" />
-
-                <TextView
-                    android:id="@+id/mount_list_info4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/ic_baseline_info_24"
-                    android:drawablePadding="10dp"
-                    android:fontFamily="@font/aclonica"
-                    android:padding="10dp"
-                    android:text="mount_list_info4"
-                    android:textSize="16dp" />
+                    android:textSize="20dp" />
 
             </LinearLayout>
 
@@ -107,27 +96,21 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="28dp"
-            android:layout_marginTop="10dp"
             android:layout_marginBottom="30dp"
-            android:background="@drawable/custom_record_button"
+            android:background="@drawable/custom_round_button"
             android:fontFamily="@font/aclonica"
-            android:shadowColor="#000000"
-            android:shadowDx="7.0"
-            android:shadowDy="7.0"
-            android:shadowRadius="7.0"
             android:text="Back"
             android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/startBtn"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="28dp"
-            android:background="@drawable/custom_record_button"
+            android:background="@drawable/custom_round_button"
             android:fontFamily="@font/aclonica"
             android:shadowColor="#000000"
             android:shadowDx="7.0"
