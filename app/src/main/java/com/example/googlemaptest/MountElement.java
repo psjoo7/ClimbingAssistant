@@ -25,7 +25,10 @@ public class MountElement implements Comparable<MountElement>{
 
 
     public void setDistance(double lat, double lng) {
-        this.distance = Math.sqrt(Math.pow((lat - Double.parseDouble(this.end.split(" ")[1])),2) + Math.pow(lng - Double.parseDouble(this.end.split(" ")[0]),2));
+
+        double X = Math.abs(lat-Double.parseDouble(this.end.split(" ")[1]));
+        double Y = Math.abs(lng-Double.parseDouble(this.end.split(" ")[0]));
+        this.distance = Math.sqrt(X*X + Y*Y);
     }
 
     @Override
