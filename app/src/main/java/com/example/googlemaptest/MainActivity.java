@@ -83,9 +83,10 @@ public class MainActivity extends AppCompatActivity
     private FragmentTransaction transaction;
     private TextView location_log;
     private TextView isOK;
-    private Button done, setLocationBtn;
+    private Button done, update;
     private DatabaseReference mMount;
     private ChildEventListener mChildEventListener;
+
     Marker marker;
 
     private View mLayout;  // Snackbar 사용하기 위해서는 View가 필요합니다.
@@ -99,8 +100,6 @@ public class MainActivity extends AppCompatActivity
                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         setContentView(R.layout.activity_main);
-        location_log = findViewById(R.id.Location_log);
-        mLayout = findViewById(R.id.layout_main);
         locationRequest = new LocationRequest()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                 .setInterval(UPDATE_INTERVAL_MS)
@@ -122,7 +121,7 @@ public class MainActivity extends AppCompatActivity
         ChildEventListener mChildEventListener;
         mMount.push().setValue(marker);
 
-        setLocationBtn = findViewById(R.id.setLocationBtn);
+        update = findViewById(R.id.update);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             Log.d("PERMISSION","위치권한을 확인하세요");
         }
@@ -134,7 +133,7 @@ public class MainActivity extends AppCompatActivity
 
         // 1. updateBtn 클릭하면 현재 내 좌표 받아온다. (lat, lng)
         // 2. 산 리스트에 있는 모든 산과 거리 비교 후 산 리스트를 거리순으로 정렬
-        setLocationBtn.setOnClickListener(new View.OnClickListener(){
+        update.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view)
             {
@@ -146,22 +145,7 @@ public class MainActivity extends AppCompatActivity
                 for(int i=0; i<mount.size(); i++)
                 {
                     mount.get(i).setDistance(lat, lng);
-//                    String end = mount.get(i).end;
-//                    Log.d("aaaaaa", "aaaa : " +mount.get(i).end + " " + lng + " " + lat);
-//                    String[] endPointSplit = end.split(" ");
-//                    Double lag = Double.parseDouble(endPointSplit[0]);
-//                    Double log = Double.parseDouble(endPointSplit[1]);
-//                    Location location1 = new Location("newloc");
-//                    location1.setLatitude(lag);
-//                    location1.setLongitude(log);
-//                    Location.distanceBetween(lat, lng, lag, log, currentloc);
-//                    Log.d("currentloc", "currentloc : " + currentloc[0]);
-//                    mount.get(i).realdist = location.distanceTo(location1)/1000;
-//                    mount.get(i).realdist = getDistance(lng, lat, lag, log);
-//                    Log.d("disdis","distance : "+ mount.get(i).realdist + " index : "+ idx++);
-
                 }
-//                Log.d("currentloc", "currentloc : " + currentloc[0]);
                 Log.d("before",mount.toString());
                 Collections.sort(mount);
                 Log.d("after",mount.toString());
@@ -170,15 +154,6 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-    }
-
-    Double getDistance(Double lat1, Double lng1, Double lat2, Double lng2){
-        Double R = 6372.8 * 1000;
-        Double dLat = Math.toRadians(lat2 - lat1);
-        Double dLng = Math.toRadians(lng2 - lng1);
-        Double a = Math.pow((Math.sin(dLat / 2)), 2) + Math.pow((Math.sin(dLng / 2)), 2) * Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2));
-        Double c = 2 * Math.asin(Math.sqrt(a));
-        return R * c;
     }
     int JSONParse(String jsonStr) {
         StringBuilder stringBuilder = new StringBuilder();
@@ -464,7 +439,7 @@ public class MainActivity extends AppCompatActivity
         builder.setNegativeButton("네", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(MainActivity.this, startMountActivity.class);
+                Intent intent = new Intent(MainActivity.this, SearchMountActivity.class);
                 intent.putExtra("MountName", String.valueOf(marker.getTitle()));
                 Log.d("onMarkerClick", "touchedMountainName : " + marker.getTitle());
                 startActivity(intent);
