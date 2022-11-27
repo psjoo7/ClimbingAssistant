@@ -28,10 +28,9 @@ import com.google.firebase.database.ValueEventListener;
 public class SearchMountActivity extends AppCompatActivity implements OnMapReadyCallback {
     private DatabaseReference mData, mRef;
     private GoogleMap mMap;
-    private String MountName;
+    private String MountName, UserID;
     private String path;
     private Button startBtn, backBtn;
-    private double MaxHeight;
     private TextView info1, info2, info3, name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,13 +46,18 @@ public class SearchMountActivity extends AppCompatActivity implements OnMapReady
         info3 = findViewById(R.id.mount_list_info3);
         Intent getMainIntent = getIntent();
         MountName = getMainIntent.getStringExtra("MountName");
+        UserID = getMainIntent.getStringExtra("UserID");
         name = findViewById(R.id.mountName);
         name.setText(MountName);
+
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String maxheight = info3.getText().toString();
                 Intent intent = new Intent(SearchMountActivity.this, startMountActivity.class);
-                intent.putExtra("MountName", MountName+","+MaxHeight);
+                intent.putExtra("MountName", MountName);
+                intent.putExtra("UserID", UserID);
+                intent.putExtra("MaxHeight", maxheight);
                 startActivity(intent);
             }
         });
@@ -98,7 +102,6 @@ public class SearchMountActivity extends AppCompatActivity implements OnMapReady
                 path = mountInfo.path;
                 info1.setText("Mountain Name : " + mountInfo.mname);
                 info2.setText("Max Height : " + String.valueOf(mountInfo.maxHeight) + "Meter");
-                MaxHeight = mountInfo.maxHeight;
                 info3.setText("Hiking Distance : " + String.valueOf(mountInfo.length) + "Kilometer");
                 Log.d("startpath", "getIntent1 "+ path);
                 drawLine(mMap, path);

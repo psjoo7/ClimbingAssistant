@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity
     private DatabaseReference mMount;
     private ChildEventListener mChildEventListener;
     private LinearLayout mountainList;
+    private String UserID;
 
     Marker marker;
 
@@ -113,6 +114,9 @@ public class MainActivity extends AppCompatActivity
         LocationManager lm =(LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+        Intent getUserID = getIntent();
+        UserID = getUserID.getStringExtra("UserID");
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -158,6 +162,7 @@ public class MainActivity extends AppCompatActivity
                         @Override
                         public void onClick(View v)
                         {
+
                             Log.e("mName",""+mountain.getText());
                             Intent intent = new Intent(MainActivity.this, SearchMountActivity.class);
                             intent.putExtra("MountName", String.valueOf(mountain.getText()));
@@ -195,10 +200,6 @@ public class MainActivity extends AppCompatActivity
                     Log.d("MainActivity", "ValueEventListener : " + endPointSplit[1]);
                     Double lag = Double.parseDouble(endPointSplit[0]);
                     Double log = Double.parseDouble(endPointSplit[1]);
-//                    Location location1 = new Location("emount");
-//                    location1.setLatitude(lag);
-//                    location1.setLongitude(log);
-//                    eMount.realdist = location.distanceTo(location1);
                     try {
                         mount.add(eMount);
                     } catch (NullPointerException e) {
@@ -306,14 +307,6 @@ public class MainActivity extends AppCompatActivity
         if (mMap!=null)
                 mMap.setMyLocationEnabled(true);
         mFusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null);
-//        if (checkPermission()) {
-//
-//            Log.d(TAG, "onStart : call mFusedLocationClient.requestLocationUpdates");
-//            mFusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null);
-//
-//            if (mMap!=null)
-//                mMap.setMyLocationEnabled(true);
-//        }
     }
 
     @Override
@@ -426,6 +419,7 @@ public class MainActivity extends AppCompatActivity
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(MainActivity.this, SearchMountActivity.class);
                 intent.putExtra("MountName", String.valueOf(marker.getTitle()));
+                intent.putExtra("UserID", UserID);
                 Log.d("onMarkerClick", "touchedMountainName : " + marker.getTitle());
                 startActivity(intent);
             }
@@ -440,4 +434,5 @@ public class MainActivity extends AppCompatActivity
         dialog.show();
         return true;
     }
+
 }

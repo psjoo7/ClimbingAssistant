@@ -51,87 +51,12 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
+                android:id="@+id/recordview"
                 android:layout_width="match_parent"
                 android:layout_height="450dp"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:orientation="vertical">
-
-
-                <TextView
-                    android:id="@+id/textView5"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="0dp"
-                    android:background="@drawable/custom_line_white"
-                    android:drawableStart="@drawable/ic_baseline_done_outline_24"
-                    android:drawablePadding="10dp"
-                    android:fontFamily="@font/aclonica"
-                    android:text="TextView"
-                    android:textSize="24sp" />
-
-                <TextView
-                    android:id="@+id/textView6"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/custom_line_white"
-                    android:drawableStart="@drawable/ic_baseline_done_outline_24"
-                    android:drawablePadding="10dp"
-                    android:fontFamily="@font/aclonica"
-                    android:text="TextView"
-                    android:textSize="24sp" />
-
-                <TextView
-                    android:id="@+id/textView7"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/custom_line_white"
-                    android:drawableStart="@drawable/ic_baseline_done_outline_24"
-                    android:drawablePadding="10dp"
-                    android:fontFamily="@font/aclonica"
-                    android:text="TextView"
-                    android:textSize="24sp" />
-
-                <TextView
-                    android:id="@+id/textView8"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/custom_line_white"
-                    android:drawableStart="@drawable/ic_baseline_done_outline_24"
-                    android:drawablePadding="10dp"
-                    android:fontFamily="@font/aclonica"
-                    android:text="TextView"
-                    android:textSize="24sp" />
-
-                <TextView
-                    android:id="@+id/textView9"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/custom_line_white"
-                    android:drawableStart="@drawable/ic_baseline_done_outline_24"
-                    android:drawablePadding="10dp"
-                    android:fontFamily="@font/aclonica"
-                    android:text="TextView"
-                    android:textSize="24sp" />
-
-                <TextView
-                    android:id="@+id/textView10"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/custom_line_white"
-                    android:drawableStart="@drawable/ic_baseline_done_outline_24"
-                    android:drawablePadding="10dp"
-                    android:fontFamily="@font/aclonica"
-                    android:text="TextView10"
-                    android:textSize="24sp" />
-
-
-            </LinearLayout>
+                android:orientation="vertical"/>
         </ScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
