@@ -10,17 +10,12 @@ public class LoadingActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
-        startLoading();
-    }
 
-    //로딩화면 먼저 키고 딜레이 5초 주고 화면 종료 -> 메인액티비로 화면 전환
-    private void startLoading() {
-        Handler handle = new Handler();
-        handle.postDelayed(new Runnable(){
-            @Override
-            public void run() {
-                finish();
-            }
-        },3000);
+        Intent intent = new Intent(LoadingActivity.this,LoginActivity.class);
+        startActivity(intent);
+        //다음 화면에 실행할 애니메이션, 현재 화면에 실행할 애니메이션
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        finish();
+
     }
 }
