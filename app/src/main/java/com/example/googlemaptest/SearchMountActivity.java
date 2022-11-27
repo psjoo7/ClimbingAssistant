@@ -93,7 +93,7 @@ public class SearchMountActivity extends AppCompatActivity implements OnMapReady
                 path = mountInfo.path;
                 info1.setText("등산 산 : " + mountInfo.mname);
                 info2.setText("최대 고도 : " + String.valueOf(mountInfo.maxHeight) + "미터");
-                info3.setText("등산 거리 : " + String.valueOf(mountInfo.distance) + "킬로미터");
+                info3.setText("등산 거리 : " + String.valueOf(mountInfo.length) + "킬로미터");
                 Log.d("startpath", "getIntent1 "+ path);
                 drawLine(mMap, path);
             }
