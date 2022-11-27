@@ -28,7 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 public class SearchMountActivity extends AppCompatActivity implements OnMapReadyCallback {
     private DatabaseReference mData, mRef;
     private GoogleMap mMap;
-    private String MountName;
+    private String MountName, UserID;
     private String path;
     private Button startBtn, backBtn;
     private double MaxHeight;
@@ -47,13 +47,18 @@ public class SearchMountActivity extends AppCompatActivity implements OnMapReady
         info3 = findViewById(R.id.mount_list_info3);
         Intent getMainIntent = getIntent();
         MountName = getMainIntent.getStringExtra("MountName");
+        UserID = getMainIntent.getStringExtra("UserID");
         name = findViewById(R.id.mountName);
         name.setText(MountName);
+
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String maxheight = info3.getText().toString();
                 Intent intent = new Intent(SearchMountActivity.this, startMountActivity.class);
-                intent.putExtra("MountName", MountName+","+MaxHeight);
+                intent.putExtra("MountName", MountName);
+                intent.putExtra("UserID", UserID);
+                intent.putExtra("MaxHeight", maxheight);
                 startActivity(intent);
             }
         });

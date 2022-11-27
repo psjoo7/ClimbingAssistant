@@ -86,6 +86,8 @@ public class MainActivity extends AppCompatActivity
     private DatabaseReference mMount;
     private ChildEventListener mChildEventListener;
     private LinearLayout mountainList;
+    public double MaxHeight;
+    private String UserID;
 
     Marker marker;
 
@@ -113,6 +115,9 @@ public class MainActivity extends AppCompatActivity
         LocationManager lm =(LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+        Intent getUserID = getIntent();
+        UserID = getUserID.getStringExtra("UserID");
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -158,6 +163,7 @@ public class MainActivity extends AppCompatActivity
                         @Override
                         public void onClick(View v)
                         {
+
                             Log.e("mName",""+mountain.getText());
                             Intent intent = new Intent(MainActivity.this, SearchMountActivity.class);
                             intent.putExtra("MountName", String.valueOf(mountain.getText()));
@@ -190,6 +196,11 @@ public class MainActivity extends AppCompatActivity
                     MountElement mount_each = snapshot.getValue(MountElement.class);
                     MountElement eMount = new MountElement(mount_each.end, mount_each.length, mount_each.maxHeight, mount_each.mname, mount_each.path, mount_each.starting, x++);
                     String endPoint = mount_each.end;
+                    if(mount_each.maxHeight != null)
+                    {
+                        MaxHeight = mount_each.maxHeight;
+
+                    }
                     String[] endPointSplit = endPoint.split(" ");
                     Log.d("MainActivity", "ValueEventListener : " + endPointSplit[0]);
                     Log.d("MainActivity", "ValueEventListener : " + endPointSplit[1]);
@@ -426,6 +437,7 @@ public class MainActivity extends AppCompatActivity
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(MainActivity.this, SearchMountActivity.class);
                 intent.putExtra("MountName", String.valueOf(marker.getTitle()));
+                intent.putExtra("UserID", UserID);
                 Log.d("onMarkerClick", "touchedMountainName : " + marker.getTitle());
                 startActivity(intent);
             }
@@ -440,4 +452,5 @@ public class MainActivity extends AppCompatActivity
         dialog.show();
         return true;
     }
+
 }

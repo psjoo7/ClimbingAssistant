@@ -62,19 +62,21 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
     LinkedList<Location> location_info = new LinkedList<>();
     private static final int UPDATE_INTERVAL_MS = 1000;  // 1초
     private static final int FASTEST_UPDATE_INTERVAL_MS = 500; // 0.5초
-    private String MountName;
+    private String MountName, UserID;
     private DatabaseReference mData, mRef;
     private String path;
     private GoogleMap mMap;
     private TextView mname;
     private Chronometer stopWatch;
     private Marker currentMarker = null;
-    private Button stop;
+    private Button stop, mainBtn;
     private FusedLocationProviderClient mFusedLocationClient;
     private LocationRequest locationRequest;
     private Location location;
     private double CurElevation;
     private String GoalElevation;
+    private String[] record;
+    private String userpath = "";
 
     Location mCurrentLocatiion;
     LatLng currentPosition;
@@ -84,9 +86,10 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_mount);
 
-        Intent getMainIntent = getIntent();
-        MountName = getMainIntent.getStringExtra("MountName");
-        GoalElevation = getMainIntent.getStringExtra("MaxHeight");
+        Intent getSearchIntent = getIntent();
+        MountName = getSearchIntent.getStringExtra("MountName");
+        UserID = getSearchIntent.getStringExtra("UserID");
+        GoalElevation = getSearchIntent.getStringExtra("MaxHeight");
         Log.d("MaxHeight", "elevation : "+GoalElevation);
         locationRequest = new LocationRequest()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
@@ -121,8 +124,23 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
         stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String recordtime = timeHandler(currentTime, stopWatch);
                 Intent intent = new Intent(startMountActivity.this, ResultActivity.class);
+                intent.putExtra("time", recordtime);
+                intent.putExtra("mname", MountName);
+                intent.putExtra("record", userpath);
+                intent.putExtra("UserID", UserID);
                 startActivity(intent);
+            }
+        });
+
+        mainBtn = findViewById(R.id.mainBtn);
+        mainBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(startMountActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }
@@ -163,11 +181,8 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
                 Double log = Double.parseDouble(endPointSplit[1]);
                 Double slag = Double.parseDouble(startPointSplit[0]);
                 Double slog = Double.parseDouble(startPointSplit[1]);
-                LatLng latLng = new LatLng(log, lag);
-                LatLng latLng1 = new LatLng(slog, slag);
-                //mMap.addMarker(new MarkerOptions().position(latLng).title(mountInfo.mname).snippet(String.valueOf(mountInfo.maxHeight)));
-                //mMap.addMarker(new MarkerOptions().position(latLng1).title(mountInfo.mname).snippet(String.valueOf(mountInfo.maxHeight)));
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+                LatLng midLatlng = new LatLng((log + slog) / 2, (lag + slag) / 2);
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(midLatlng, 15));
                 path = mountInfo.path;
                 Log.d("startpath", "getIntent1 "+ path);
                 drawLine(mMap, path);
@@ -178,7 +193,7 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
         });
 //        mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(37.52487, 126.92723)));
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
-//        mMap.animateCamera(CameraUpdateFactory.zoomTo(30));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(30));
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
 
             @Override
@@ -256,6 +271,7 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
         Log.d("cccc", "cccc6");
         mFusedLocationClient.removeLocationUpdates(locationCallback);
     }
+
     LocationCallback locationCallback = new LocationCallback() {
         @Override
         public void onLocationResult(LocationResult locationResult) {
@@ -269,6 +285,8 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
                 location = locationList.get(locationList.size() - 1);
                 location_info.add(location);
                 //location = locationList.get(0);
+                String a = convertLocToString(location);
+                userpath += a;
 
                 currentPosition
                         = new LatLng(location.getLatitude(), location.getLongitude());
@@ -287,6 +305,8 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
                     message.setData(bundle);
                     handler.sendMessage(message);
                     double ele1 = Double.parseDouble(ele);
+                    Log.d("ele", "ele : " + getElevation(location.getLatitude(), location.getLongitude()));
+
                 }).start();
 
                 String Lat1 = String.valueOf(location.getLatitude());
@@ -353,8 +373,9 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
 
         currentMarker = mMap.addMarker(markerOptions);
 
-//        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(currentLatLng);
-//        mMap.moveCamera(cameraUpdate);
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(currentLatLng);
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+        mMap.moveCamera(cameraUpdate);
 
     }
 
@@ -385,5 +406,10 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
             polylineOptions.add(new LatLng(l.get(i).getLatitude(),l.get(i).getLongitude()));
         }
         Polyline polyline = map.addPolyline(polylineOptions);
+    }
+    private String convertLocToString(Location location)
+    {
+        String coordinate = String.valueOf(location.getLatitude())+" "+ String.valueOf(location.getLongitude())+",";
+        return coordinate;
     }
 }
