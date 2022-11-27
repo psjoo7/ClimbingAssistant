@@ -61,6 +61,7 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
     private FusedLocationProviderClient mFusedLocationClient;
     private TextView ArrivalRate;
     public String elevation = "";
+    private double max_height = 0;
     private static final int UPDATE_INTERVAL_MS = 1000;  // 1초
     private static final int FASTEST_UPDATE_INTERVAL_MS = 500; // 0.5초
 
@@ -136,6 +137,7 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
                 MountElement mountInfo = snapshot.getValue(MountElement.class);
                 String startPoint = mountInfo.starting;
                 String endPoint = mountInfo.end;
+                max_height = mountInfo.maxHeight;
                 String[] startPointSplit = startPoint.split(" ");
                 String[] endPointSplit = endPoint.split(" ");
                 Log.d("MainActivity", "ValueEventListener : " + endPointSplit[0]);
