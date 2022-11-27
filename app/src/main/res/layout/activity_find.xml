@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="@drawable/pink_back"
+android:alpha="0.9">
+
+<TextView
+    android:id="@+id/textView2"
+    android:layout_width="302dp"
+    android:layout_height="44dp"
+    android:fontFamily="@font/aclonica"
+    android:shadowColor="#464488"
+    android:shadowDx="7.0"
+    android:shadowDy="7.0"
+    android:shadowRadius="7.0"
+    android:text="Find Your ID/PW"
+    android:textColor="@color/white"
+    android:textSize="34sp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.495"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0.061"
+    tools:ignore="SpeakableTextPresentCheck"/>
+
+<EditText
+    android:id="@+id/userName"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="36dp"
+    android:autofillHints=""
+    android:drawableStart="@drawable/ic_baseline_person_outline_24"
+    android:drawablePadding="5dp"
+    android:ems="10"
+    android:hint="Name"
+    android:inputType="textPersonName"
+    android:minHeight="48dp"
+    android:textColorHint="#757575"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.343"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <ImageButton
+        android:id="@+id/FindButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="36dp"
+        android:background="@drawable/button_back"
+        android:backgroundTint="@color/white"
+
+        app:layout_constraintStart_toEndOf="@+id/userName"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:srcCompat="@android:drawable/ic_menu_search"
+        tools:ignore="ImageContrastCheck,SpeakableTextPresentCheck" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="313dp"
+        android:layout_height="414dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/findid_frame"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userName" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/BackButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/find_frame"
+
+        android:fontFamily="@font/aclonica"
+        android:text="back"
+        android:textColor="#FF4C385D"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.951"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.658" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
