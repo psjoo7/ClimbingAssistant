@@ -1,0 +1,56 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/img_1"
+    android:alpha="0.8">
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="450dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context=".MapsActivity" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/mainBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/circle_button"
+        android:fontFamily="@font/aclonica"
+        android:shadowColor="#000000"
+        android:shadowDx="7.0"
+        android:shadowDy="7.0"
+        android:shadowRadius="7.0"
+        android:text="Back"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/map" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/TraceButton"
+        android:layout_width="98dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        app:layout_constraintStart_toEndOf="@+id/mainBtn"
+        app:layout_constraintTop_toBottomOf="@+id/map"
+        android:background="@drawable/circle_button"
+        android:fontFamily="@font/aclonica"
+        android:shadowColor="#000000"
+        android:shadowDx="7.0"
+        android:shadowDy="7.0"
+        android:shadowRadius="7.0"
+        android:text="Trace"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
