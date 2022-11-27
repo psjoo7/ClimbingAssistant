@@ -66,7 +66,7 @@
         </ScrollView>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/backBtn"
+            android:id="@+id/updateBtn"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
