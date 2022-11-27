@@ -59,7 +59,7 @@
                     android:fontFamily="@font/aclonica"
                     android:padding="10dp"
                     android:text="mount_list_info"
-                    android:textSize="25dp"
+                    android:textSize="20dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
@@ -74,7 +74,7 @@
                     android:fontFamily="@font/aclonica"
                     android:padding="10dp"
                     android:text="mount_list_info2"
-                    android:textSize="25dp" />
+                    android:textSize="20dp" />
 
                 <TextView
                     android:id="@+id/mount_list_info3"
@@ -85,7 +85,7 @@
                     android:fontFamily="@font/aclonica"
                     android:padding="10dp"
                     android:text="mount_list_info3"
-                    android:textSize="25dp" />
+                    android:textSize="20dp" />
 
             </LinearLayout>
 
