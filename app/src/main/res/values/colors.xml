@@ -18,5 +18,6 @@
     <color name="darkgreen">#09675E</color>
     <color name="gray">#CFCFCF</color>
     <color name="lightblue">#FF9AC1D8</color>
+    <color name="lightblueO">#809AC1D8</color>
     <color name="lightpink">#FFFBE1E3</color>
 </resources>
