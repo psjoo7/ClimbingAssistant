@@ -6,9 +6,4 @@
             android:width="5dp"
             android:color="#FFFBE1E3" />
         <corners android:radius="20dp" />
-<<<<<<< HEAD
 </shape>
-
-=======
-</shape>
->>>>>>> 9536c775a387e41dda0cb2b8528550a6efcdea7b
