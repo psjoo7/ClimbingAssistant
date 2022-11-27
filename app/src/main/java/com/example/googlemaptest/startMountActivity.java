@@ -163,8 +163,8 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
                 Double slog = Double.parseDouble(startPointSplit[1]);
                 LatLng latLng = new LatLng(log, lag);
                 LatLng latLng1 = new LatLng(slog, slag);
-                mMap.addMarker(new MarkerOptions().position(latLng).title(mountInfo.mname).snippet(String.valueOf(mountInfo.maxHeight)));
-                mMap.addMarker(new MarkerOptions().position(latLng1).title(mountInfo.mname).snippet(String.valueOf(mountInfo.maxHeight)));
+                //mMap.addMarker(new MarkerOptions().position(latLng).title(mountInfo.mname).snippet(String.valueOf(mountInfo.maxHeight)));
+                //mMap.addMarker(new MarkerOptions().position(latLng1).title(mountInfo.mname).snippet(String.valueOf(mountInfo.maxHeight)));
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
                 path = mountInfo.path;
                 Log.d("startpath", "getIntent1 "+ path);
@@ -174,7 +174,7 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(37.52487, 126.92723)));
+//        mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(37.52487, 126.92723)));
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
 //        mMap.animateCamera(CameraUpdateFactory.zoomTo(30));
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
@@ -284,7 +284,7 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
                     message.setData(bundle);
                     handler.sendMessage(message);
                     double ele1 = Double.parseDouble(ele);
-
+                    Log.d("ele", "ele : " + getElevation(location.getLatitude(), location.getLongitude()));
                 }).start();
 
                 String Lat1 = String.valueOf(location.getLatitude());
@@ -350,8 +350,9 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
         markerOptions.draggable(true);
 
         currentMarker = mMap.addMarker(markerOptions);
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(currentLatLng);
-        mMap.moveCamera(cameraUpdate);
+
+//        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(currentLatLng);
+//        mMap.moveCamera(cameraUpdate);
 
     }
 
