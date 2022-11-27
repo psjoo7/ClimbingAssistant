@@ -62,6 +62,7 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
     LinkedList<Location> location_info = new LinkedList<>();
     private static final int UPDATE_INTERVAL_MS = 1000;  // 1초
     private static final int FASTEST_UPDATE_INTERVAL_MS = 500; // 0.5초
+    private String MountInfo;
     private String MountName;
     private DatabaseReference mData, mRef;
     private String path;
@@ -74,7 +75,7 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
     private LocationRequest locationRequest;
     private Location location;
     private double CurElevation;
-    private String GoalElevation;
+    private double GoalElevation;
 
     Location mCurrentLocatiion;
     LatLng currentPosition;
@@ -85,8 +86,9 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
         setContentView(R.layout.activity_start_mount);
 
         Intent getMainIntent = getIntent();
-        MountName = getMainIntent.getStringExtra("MountName");
-        GoalElevation = getMainIntent.getStringExtra("MaxHeight");
+        MountInfo = getMainIntent.getStringExtra("MountName");
+        MountName = MountInfo.split(",")[0];
+        GoalElevation = Double.parseDouble(MountInfo.split(",")[1]);
         Log.d("MaxHeight", "elevation : "+GoalElevation);
         locationRequest = new LocationRequest()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)

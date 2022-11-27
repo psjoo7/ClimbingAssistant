@@ -46,9 +46,7 @@ public class SearchMountActivity extends AppCompatActivity implements OnMapReady
         info2 = findViewById(R.id.mount_list_info2);
         info3 = findViewById(R.id.mount_list_info3);
         Intent getMainIntent = getIntent();
-        MountName = getMainIntent.getStringExtra("MountName");
         name = findViewById(R.id.mountName);
-        name.setText(MountName);
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

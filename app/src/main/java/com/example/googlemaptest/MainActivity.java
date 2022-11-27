@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity
     private DatabaseReference mMount;
     private ChildEventListener mChildEventListener;
     private LinearLayout mountainList;
+    public double MaxHeight;
 
     Marker marker;
 
@@ -190,6 +191,11 @@ public class MainActivity extends AppCompatActivity
                     MountElement mount_each = snapshot.getValue(MountElement.class);
                     MountElement eMount = new MountElement(mount_each.end, mount_each.length, mount_each.maxHeight, mount_each.mname, mount_each.path, mount_each.starting, x++);
                     String endPoint = mount_each.end;
+                    if(mount_each.maxHeight != null)
+                    {
+                        MaxHeight = mount_each.maxHeight;
+
+                    }
                     String[] endPointSplit = endPoint.split(" ");
                     Log.d("MainActivity", "ValueEventListener : " + endPointSplit[0]);
                     Log.d("MainActivity", "ValueEventListener : " + endPointSplit[1]);
