@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -184,6 +185,14 @@ public class MainActivity extends AppCompatActivity
                 for(int i=0; i<mount.size();i++) {
                     final TextView mountain = new TextView(getBaseContext());
                     mountain.setText(mount.get(i).mname);
+                    mountain.setTextSize(20);
+                    mountain.setTypeface(null, Typeface.BOLD);
+                    mountain.setBackground(getDrawable(R.drawable.textview_custom));
+
+////                    LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+//                    params.bottomMargin=10;
+//                    mountain.setLayoutParams(params);
+
                     mountainList.addView(mountain);
                     mountain.setOnClickListener(new View.OnClickListener()
                     {
@@ -203,6 +212,7 @@ public class MainActivity extends AppCompatActivity
         });
 
     }
+
 
     @Override
     public void onMapReady(final GoogleMap googleMap) {

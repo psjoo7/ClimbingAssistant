@@ -3,7 +3,7 @@
      <stroke android:color="@color/cloud2"
          android:width="2dp"/>
     <corners android:radius="10dp"/>
-    <padding android:left="10dp"
+    <padding android:left="160dp"
         android:right="10dp"
         android:bottom="10dp"
         android:top="10dp"/>
