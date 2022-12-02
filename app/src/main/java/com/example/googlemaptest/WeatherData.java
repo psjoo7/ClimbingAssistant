@@ -29,9 +29,9 @@ public class WeatherData{
         String baseTime = timeChange(time); //"0500";//timeChange(time);	//조회하고싶은 시간
         String type = "json";    //조회하고싶은 시간
 
-        String apiUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService/getVilageFcst";
+        String apiUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0";
 //         홈페이지에서 받은 키
-        String serviceKey = "8bBHdSOqe1GzRlJ%2Be6VPGq%2Bp2Q6hcS21Y8dcZwfd6dKrhbVApvbfzgpubXrCI81GqupGRtbuUdK6%2BOy6vt8MiA%3D%3D";
+        String serviceKey = "nIJ9f165Z3BOKhM1Uh0vCUkZQQR6wh2pcpdgCmuF8izPsf0tbnlDNb1B3QTOJmpTREL0j7Mixr%2BQ0atkNX7UAQ%3D%3D";
 
         StringBuilder urlBuilder = new StringBuilder(apiUrl);
         urlBuilder.append("?" + URLEncoder.encode("ServiceKey", "UTF-8") + "=" + serviceKey);
@@ -65,10 +65,11 @@ public class WeatherData{
         rd.close();
         conn.disconnect();
         String result = sb.toString();
-
-
+        Log.d("result array" , "Current weather : " + String.valueOf(sb));
         // response 키를 가지고 데이터를 파싱
         JSONObject jsonObj_1 = new JSONObject(result);
+
+        Log.d("result array : " , result);
         String response = jsonObj_1.getString("response");
 
         // response 로 부터 body 찾기
@@ -84,6 +85,10 @@ public class WeatherData{
         JSONObject jsonObj_4 = new JSONObject(items);
         JSONArray jsonArray = jsonObj_4.getJSONArray("item");
 
+//        JSONArray jsonArray1 = new JSONArray(result);
+//        for(int i = 0 ; i < jsonArray1.length(); i++){
+//            String
+//        }
         for (int i = 0; i < jsonArray.length(); i++) {
             jsonObj_4 = jsonArray.getJSONObject(i);
             String fcstValue = jsonObj_4.getString("fcstValue");

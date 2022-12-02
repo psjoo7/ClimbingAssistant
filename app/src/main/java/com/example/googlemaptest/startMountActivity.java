@@ -392,7 +392,10 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
                 polylineOptions.color(Color.BLUE);
             }
             Polyline polyline = Map.addPolyline(polylineOptions);
-
+            Log.d("get endCap", String.valueOf(polyline.getEndCap()));
+            Log.d("get endCap", String.valueOf(polyline.getJointType()));
+            Log.d("get endCap", String.valueOf(polyline.getPoints()));
+            Log.d("get endCap", String.valueOf(polyline.getZIndex()));
         }
         catch (Exception e){}
     }
@@ -406,6 +409,7 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
             polylineOptions.add(new LatLng(l.get(i).getLatitude(),l.get(i).getLongitude()));
         }
         Polyline polyline = map.addPolyline(polylineOptions);
+
     }
     private String convertLocToString(Location location)
     {
