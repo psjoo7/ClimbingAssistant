@@ -34,7 +34,7 @@
         <ScrollView
             android:id="@+id/scrollView2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="250dp"
             android:layout_marginTop="16dp"
             android:paddingVertical="20dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -45,9 +45,13 @@
             <LinearLayout
                 android:id="@+id/mountainList"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:orientation="vertical">
-                <androidx.appcompat.widget.AppCompatButton
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"/>
+                
+        </ScrollView>
+        
+        <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/update"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -66,10 +70,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/scrollView2"
                     app:layout_constraintVertical_bias="1.0" />
-
-            </LinearLayout>
-
-        </ScrollView>
 
 
 
