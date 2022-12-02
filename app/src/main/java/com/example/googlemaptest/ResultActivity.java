@@ -25,9 +25,11 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
     private GoogleMap mMap;
     private String time, record, mname, UserID;
     private Double ArrivalRate;
+
     private TextView weather_result;
     private TextView ArrivalRate_result;
     private TextView time_result;
+
     private Task<Void> mData;
     private DatabaseReference mRef;
     private Button TraceButton,mainBtn;
@@ -52,6 +54,7 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
         UserID = getRecords.getStringExtra("UserID");
         ArrivalRate = getRecords.getDoubleExtra("Rate",0);
         Log.d("RRRRR",ArrivalRate+"%");
+
         UserID = UserID.split("[.]")[0];
         ArrivalRate_result.setText(ArrivalRate+"");
         time_result.setText(time);
