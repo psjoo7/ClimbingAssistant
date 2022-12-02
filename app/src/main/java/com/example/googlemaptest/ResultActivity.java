@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -22,6 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class ResultActivity extends AppCompatActivity implements OnMapReadyCallback {
     private GoogleMap mMap;
     private String time, record, mname, UserID;
+    private Double ArrivalRate;
     private Task<Void> mData;
     private DatabaseReference mRef;
     private Button TraceButton,mainBtn;
@@ -41,6 +43,8 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
         record = getRecords.getStringExtra("record");
         mname = getRecords.getStringExtra("mname");
         UserID = getRecords.getStringExtra("UserID");
+        ArrivalRate = getRecords.getDoubleExtra("Rate",0);
+        Log.d("RRRRR",ArrivalRate+"");
         UserID = UserID.split("[.]")[0];
         Record userRecord = new Record(time, record, mname, UserID);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
