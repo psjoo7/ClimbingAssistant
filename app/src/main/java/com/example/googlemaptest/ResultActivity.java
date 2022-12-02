@@ -52,9 +52,10 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
         record = getRecords.getStringExtra("record");
         mname = getRecords.getStringExtra("mname");
         UserID = getRecords.getStringExtra("UserID");
+        //유저 아이디가 제대로 안넘어와서 오류 생기는건데 수정은 안했습니다 확인부탁드려용
         ArrivalRate = getRecords.getDoubleExtra("Rate",0);
         Log.d("RRRRR",ArrivalRate+"%");
-
+        Log.d("userID",UserID+"");
         UserID = UserID.split("[.]")[0];
         ArrivalRate_result.setText(ArrivalRate+"");
         time_result.setText(time);

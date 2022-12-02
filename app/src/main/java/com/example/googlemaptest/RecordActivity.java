@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -36,6 +37,10 @@ public class RecordActivity extends AppCompatActivity {
                     UserRecord record_each = snapshot.getValue(UserRecord.class);
                     final TextView recordview = new TextView(getBaseContext());
                     recordview.setText(record_each.mname);
+                    recordview.setTextSize(20);
+                    recordview.setTypeface(null, Typeface.BOLD);
+                    recordview.setBackground(getDrawable(R.drawable.textview_custom));
+
                     recordlinear.addView(recordview);
                 }
 
