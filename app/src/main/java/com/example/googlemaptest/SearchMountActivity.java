@@ -1,5 +1,6 @@
 package com.example.googlemaptest;
 
+import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,7 +10,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -25,6 +28,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Map;
+
 public class SearchMountActivity extends AppCompatActivity implements OnMapReadyCallback {
     private DatabaseReference mData, mRef;
     private GoogleMap mMap;
@@ -33,6 +38,11 @@ public class SearchMountActivity extends AppCompatActivity implements OnMapReady
     private Button startBtn, backBtn;
     private double MaxHeight;
     private TextView info1, info2, info3, name;
+    private RadioGroup levelChoice;
+    private double level = -9999;
+    // 초기값 -9999. level < 0 인 것 확인해서 난이도 선택 했는지 안 했는지 확인 안했으면 시작 못하게.
+    private String level_label ;
+    // 나중에 기록해줄 난이도. intent로 넘겨줄거임 (상,중,하 로 표시)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,20 +55,49 @@ public class SearchMountActivity extends AppCompatActivity implements OnMapReady
         info1 = findViewById(R.id.mount_list_info1);
         info2 = findViewById(R.id.mount_list_info2);
         info3 = findViewById(R.id.mount_list_info3);
+
         Intent getMainIntent = getIntent();
         MountName = getMainIntent.getStringExtra("MountName");
         UserID = getMainIntent.getStringExtra("UserID");
         name = findViewById(R.id.mountName);
         name.setText(MountName);
-
+        levelChoice = (RadioGroup)findViewById(R.id.levelGroup);
+        levelChoice.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int checkdId) {
+                switch (checkdId)
+                {
+                    case R.id.low:
+                        level = 0.3;
+                        level_label = "하";
+                        break;
+                    case R.id.middle:
+                        level = 0.6;
+                        level_label = "중" ;
+                        break;
+                    case R.id.high:
+                        level = 1;
+                        level_label = "상";
+                        break;
+                }
+            }
+        });
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(SearchMountActivity.this, startMountActivity.class);
-                intent.putExtra("MountName", MountName);
-                intent.putExtra("UserID", UserID);
-                intent.putExtra("MaxHeight", String.valueOf(MaxHeight));
-                startActivity(intent);
+                if (level < 0 ){
+                    Log.d("levelcheck","레벨체크 안함");
+                    Toast myToast = Toast.makeText(getApplicationContext(), "난이도를 선택해주세요.", Toast.LENGTH_SHORT);
+                    myToast.show();
+                }
+                else {
+                    Intent intent = new Intent(SearchMountActivity.this, startMountActivity.class);
+                    intent.putExtra("MountName", MountName);
+                    intent.putExtra("UserID", UserID);
+                    intent.putExtra("level", level_label);
+                    intent.putExtra("MaxHeight", String.valueOf(MaxHeight * level));
+                    startActivity(intent);
+                }
             }
         });
         backBtn.setOnClickListener(new View.OnClickListener() {
