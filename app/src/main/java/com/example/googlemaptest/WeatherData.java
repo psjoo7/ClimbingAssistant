@@ -27,7 +27,7 @@ public class WeatherData{
 
 //      String baseDate = date;//"20210531";//date	//조회하고싶은 날짜
         String baseTime = timeChange(time); //"0500";//timeChange(time);	//조회하고싶은 시간
-        String type = "json";    //조회하고싶은 시간
+        String type  = "json";    //조회하고싶은 시간
 
         String apiUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0";
 //         홈페이지에서 받은 키

@@ -88,6 +88,8 @@ public class MainActivity extends AppCompatActivity
     private LinearLayout mountainList;
     public double MaxHeight;
     private String UserID;
+    private int numMount = 0;
+    private final int DYNAMIC_VIEW_ID = 0x8000;
 
     Marker marker;
 
@@ -165,6 +167,7 @@ public class MainActivity extends AppCompatActivity
         // 1. updateBtn 클릭하면 현재 내 좌표 받아온다. (lat, lng)
         // 2. 산 리스트에 있는 모든 산과 거리 비교 후 산 리스트를 거리순으로 정렬
         mountainList = (LinearLayout) findViewById(R.id.mountainList);
+
         update.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view)
@@ -180,10 +183,18 @@ public class MainActivity extends AppCompatActivity
                 Log.d("before",mount.toString());
                 Collections.sort(mount);
                 Log.d("after",mount.toString());
-
-                //여기에 카드뷰 추가하는 코드 추가하면 끝날듯.
+                if(numMount > 0)
+                {
+                    for(int i=0; i<mount.size(); i++) {
+                        TextView mountainEle = findViewById(DYNAMIC_VIEW_ID + numMount);
+                        mountainList.removeView(mountainEle);
+                        numMount--;
+                    }
+                }
                 for(int i=0; i<mount.size();i++) {
+                    numMount++;
                     final TextView mountain = new TextView(getBaseContext());
+                    mountain.setId(DYNAMIC_VIEW_ID + numMount);
                     mountain.setText(mount.get(i).mname);
                     mountain.setTextSize(20);
                     mountain.setTypeface(null, Typeface.BOLD);
@@ -194,6 +205,7 @@ public class MainActivity extends AppCompatActivity
 //                    mountain.setLayoutParams(params);
 
                     mountainList.addView(mountain);
+                    Log.d("numMountain",numMount+"");
                     mountain.setOnClickListener(new View.OnClickListener()
                     {
                         @Override

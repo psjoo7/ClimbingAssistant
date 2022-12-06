@@ -79,7 +79,8 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
     private double CurRate;
     private String[] record;
     private String userpath = "";
-
+    private String currentLevel;
+    private TextView levelView;
     Location mCurrentLocatiion;
     LatLng currentPosition;
 
@@ -92,6 +93,8 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
         MountName = getSearchIntent.getStringExtra("MountName");
         UserID = getSearchIntent.getStringExtra("UserID");
         GoalElevation = Double.parseDouble(getSearchIntent.getStringExtra("MaxHeight"));
+        currentLevel = getSearchIntent.getStringExtra("level");
+        Log.d("level",currentLevel);
         Log.d("MaxHeight", "elevation : "+GoalElevation);
         locationRequest = new LocationRequest()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
@@ -111,6 +114,9 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
         arrivalRate.setText("0");
         mname = findViewById(R.id.start);
         mname.setText(MountName);
+//        levelView= findViewById(R.id.levelview);
+//        levelView.setText(currentLevel);
+        //xml 추가 후 이거
         Chronometer stopWatch  = (Chronometer) findViewById(R.id.chronometer);
         stopWatch.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener(){
             @Override
