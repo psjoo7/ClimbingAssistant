@@ -58,7 +58,7 @@
         app:layout_constraintStart_toEndOf="@+id/mainBtn"
         app:layout_constraintTop_toBottomOf="@+id/map" />
 
-    <TextView
+     <TextView
         android:id="@+id/weather"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -70,6 +70,19 @@
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="@+id/map"
         app:layout_constraintTop_toTopOf="@+id/map" />
+        
+     <TextView
+        android:id="@+id/level"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/aclonica"
+        android:text="level"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/map"
+        app:layout_constraintEnd_toEndOf="@+id/map" />
 
     <TextView
         android:id="@+id/Arrival_rate_result"
