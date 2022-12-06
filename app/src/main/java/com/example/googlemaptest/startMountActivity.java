@@ -114,8 +114,8 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
         arrivalRate.setText("0");
         mname = findViewById(R.id.start);
         mname.setText(MountName);
-//        levelView= findViewById(R.id.levelview);
-//        levelView.setText(currentLevel);
+        levelView= findViewById(R.id.levelInfo);
+        levelView.setText(currentLevel);
         //xml 추가 후 이거
         Chronometer stopWatch  = (Chronometer) findViewById(R.id.chronometer);
         stopWatch.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener(){
@@ -139,6 +139,7 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
                 intent.putExtra("mname", MountName);
                 intent.putExtra("record", userpath);
                 intent.putExtra("UserID", UserID);
+                intent.putExtra("Level",currentLevel);//현재 난이도 전달
                 intent.putExtra("Rate",CurRate);// 현재 달성률 전달
                 startActivity(intent);
             }
