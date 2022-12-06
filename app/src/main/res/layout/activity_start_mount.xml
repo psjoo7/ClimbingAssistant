@@ -48,6 +48,23 @@
         app:layout_constraintEnd_toEndOf="@+id/chronometer"
         app:layout_constraintStart_toStartOf="@+id/chronometer"
         app:layout_constraintTop_toBottomOf="@+id/chronometer" />
+    
+    <TextView
+        android:id="@+id/level"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/aclonica"
+        android:shadowColor="#000000"
+        android:shadowDx="7.0"
+        android:shadowDy="7.0"
+        android:shadowRadius="7.0"
+        android:text="LEVEL"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/Arrival_rate"
+        app:layout_constraintEnd_toEndOf="@+id/levelInfo"
+        app:layout_constraintStart_toStartOf="@+id/levelInfo"
+        app:layout_constraintTop_toBottomOf="@+id/levelInfo" />
 
 
     <TextView
@@ -96,6 +113,22 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    
+    <TextView
+        android:id="@+id/levelInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:fontFamily="@font/aclonica"
+        android:text="level"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/arrival_rate"
+        app:layout_constraintStart_toEndOf="@+id/chronometer"
+        app:layout_constraintTop_toTopOf="@+id/arrival_rate" />
+    
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/mainBtn"
