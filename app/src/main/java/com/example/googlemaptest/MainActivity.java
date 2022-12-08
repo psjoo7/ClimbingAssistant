@@ -215,6 +215,7 @@ public class MainActivity extends AppCompatActivity
                             Log.e("mName",""+mountain.getText());
                             Intent intent = new Intent(MainActivity.this, SearchMountActivity.class);
                             intent.putExtra("MountName", String.valueOf(mountain.getText()));
+                            intent.putExtra("UserID", UserID);
                             startActivity(intent);
                         }
                     });
