@@ -76,12 +76,8 @@ public class SplashActivity extends AppCompatActivity implements ActivityCompat.
                                            @NonNull int[] grandResults) {
         super.onRequestPermissionsResult(200,REQUIRED_PERMISSIONS,grandResults);
         if ( permsRequestCode == PERMISSIONS_REQUEST_CODE && grandResults.length == REQUIRED_PERMISSIONS.length) {
-
             // 요청 코드가 PERMISSIONS_REQUEST_CODE 이고, 요청한 퍼미션 개수만큼 수신되었다면
-
             check_result = true;
-
-
             // 모든 퍼미션을 허용했는지 체크합니다.
 
             for (int result : grandResults) {
@@ -90,50 +86,33 @@ public class SplashActivity extends AppCompatActivity implements ActivityCompat.
                     break;
                 }
             }
-
-
             if ( check_result ) {
-
-
                 Intent intent = new Intent(getApplicationContext(),LoadingActivity.class);
                 startActivity(intent);
-
             }
             else {
                 // 거부한 퍼미션이 있다면 앱을 사용할 수 없는 이유를 설명해주고 앱을 종료합니다.2 가지 경우가 있습니다.
-
                 if (ActivityCompat.shouldShowRequestPermissionRationale(this, REQUIRED_PERMISSIONS[0])
                         || ActivityCompat.shouldShowRequestPermissionRationale(this, REQUIRED_PERMISSIONS[1])) {
-
-
                     // 사용자가 거부만 선택한 경우에는 앱을 다시 실행하여 허용을 선택하면 앱을 사용할 수 있습니다.
                     Snackbar.make(mLayout, "퍼미션이 거부되었습니다. 앱을 다시 실행하여 퍼미션을 허용해주세요. ",
                             Snackbar.LENGTH_INDEFINITE).setAction("확인", new View.OnClickListener() {
-
                         @Override
                         public void onClick(View view) {
-
                             finish();
                         }
                     }).show();
-
                 }else {
-
-
                     // "다시 묻지 않음"을 사용자가 체크하고 거부를 선택한 경우에는 설정(앱 정보)에서 퍼미션을 허용해야 앱을 사용할 수 있습니다.
                     Snackbar.make(mLayout, "퍼미션이 거부되었습니다. 설정(앱 정보)에서 퍼미션을 허용해야 합니다. ",
                             Snackbar.LENGTH_INDEFINITE).setAction("확인", new View.OnClickListener() {
-
                         @Override
                         public void onClick(View view) {
-
                             finish();
                         }
                     }).show();
                 }
             }
-
         }
     }
-
 }
