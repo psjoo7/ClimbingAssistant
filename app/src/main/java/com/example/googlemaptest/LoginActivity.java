@@ -28,7 +28,7 @@ import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText ID, Pwd;
-    private Button JoinBtn, LoginBtn, ManageBtn;
+    private Button JoinBtn, LoginBtn, FindIDBtn;
     private FirebaseAuth mFirebaseAuth; // 파이어베이스 인증
     private DatabaseReference mDatabaseRef; // 실시간 데이터베이스(서버에 연결)
 
@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
         Pwd = findViewById(R.id.userPwd);
         JoinBtn = findViewById(R.id.JoinButton);
         LoginBtn = findViewById(R.id.LoginButton);
-        ManageBtn = findViewById(R.id.ManageButton);
+        FindIDBtn = findViewById(R.id.FindIDBtn);
         //로그인 버튼 클릭시
         LoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,6 +80,14 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+                startActivity(intent);
+            }
+        });
+        //Find Id
+        FindIDBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, FindIdActivity.class);
                 startActivity(intent);
             }
         });

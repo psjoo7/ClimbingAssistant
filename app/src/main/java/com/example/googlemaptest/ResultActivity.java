@@ -61,7 +61,7 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
         ArrivalRate = getRecords.getDoubleExtra("Rate",0);
         Log.d("RRRRR",ArrivalRate+"%");
         Log.d("userID",UserID+"");
-//        UserID = UserID.split("[.]")[0];
+        UserID = UserID.split("[.]")[0];
         ArrivalRate_result.setText(ArrivalRate+"");
         time_result.setText(time);
         level_result.setText(level);
