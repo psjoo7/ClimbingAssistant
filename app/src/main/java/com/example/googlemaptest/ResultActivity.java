@@ -6,8 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -22,9 +24,17 @@ import com.google.firebase.database.FirebaseDatabase;
 public class ResultActivity extends AppCompatActivity implements OnMapReadyCallback {
     private GoogleMap mMap;
     private String time, record, mname, UserID;
+    private Double ArrivalRate;
+
+    private TextView weather_result;
+    private TextView ArrivalRate_result;
+    private TextView time_result;
+    private TextView level_result;
+
     private Task<Void> mData;
     private DatabaseReference mRef;
     private Button TraceButton,mainBtn;
+    private String level;
 
 //            intent.putExtra("time", time1);
 //                intent.putExtra("mname", MountName);
@@ -34,6 +44,10 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
+        weather_result = findViewById(R.id.weather);
+        ArrivalRate_result = findViewById(R.id.Arrival_rate_result);
+        time_result = findViewById(R.id.time_result);
+        level_result = findViewById(R.id.level);
 
         //get record ( 추가 요소 : 총경로 아직 안됐음, arrival rate 필요)
         Intent getRecords = getIntent();
@@ -41,7 +55,17 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
         record = getRecords.getStringExtra("record");
         mname = getRecords.getStringExtra("mname");
         UserID = getRecords.getStringExtra("UserID");
-        UserID = UserID.split("[.]")[0];
+        level = getRecords.getStringExtra("Level");
+        Log.d("currentLLLL",level);
+        //유저 아이디가 제대로 안넘어와서 오류 생기는건데 수정은 안했습니다 확인부탁드려용
+        ArrivalRate = getRecords.getDoubleExtra("Rate",0);
+        Log.d("RRRRR",ArrivalRate+"%");
+        Log.d("userID",UserID+"");
+//        UserID = UserID.split("[.]")[0];
+        ArrivalRate_result.setText(ArrivalRate+"");
+        time_result.setText(time);
+        level_result.setText(level);
+        //weather_result.setText(
         Record userRecord = new Record(time, record, mname, UserID);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);

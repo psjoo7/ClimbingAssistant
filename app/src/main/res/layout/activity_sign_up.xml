@@ -135,7 +135,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="35dp"
-        android:background="@drawable/textview_custom"
+        android:background="@drawable/textview_custom2"
         android:fontFamily="@font/aclonica"
         android:includeFontPadding="false"
         android:text="회원관리, 고객 상담, 고지사항 전달을 위해 개인정보를 수집, 이용합니다."

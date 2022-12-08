@@ -60,13 +60,14 @@ import okhttp3.Response;
 
 public class startMountActivity extends AppCompatActivity implements OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback {
     LinkedList<Location> location_info = new LinkedList<>();
-    private static final int UPDATE_INTERVAL_MS = 1000;  // 1초
-    private static final int FASTEST_UPDATE_INTERVAL_MS = 500; // 0.5초
+    private static final int UPDATE_INTERVAL_MS = 3000;  // 3초
+    private static final int FASTEST_UPDATE_INTERVAL_MS = 3000; // 3초
     private String MountName, UserID;
     private DatabaseReference mData, mRef;
     private String path;
     private GoogleMap mMap;
     private TextView mname;
+    private TextView arrivalRate;
     private Chronometer stopWatch;
     private Marker currentMarker = null;
     private Button stop, mainBtn;
@@ -74,10 +75,12 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
     private LocationRequest locationRequest;
     private Location location;
     private double CurElevation;
-    private String GoalElevation;
+    private double GoalElevation;
+    private double CurRate;
     private String[] record;
     private String userpath = "";
-
+    private String currentLevel;
+    private TextView levelView;
     Location mCurrentLocatiion;
     LatLng currentPosition;
 
@@ -89,7 +92,9 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
         Intent getSearchIntent = getIntent();
         MountName = getSearchIntent.getStringExtra("MountName");
         UserID = getSearchIntent.getStringExtra("UserID");
-        GoalElevation = getSearchIntent.getStringExtra("MaxHeight");
+        GoalElevation = Double.parseDouble(getSearchIntent.getStringExtra("MaxHeight"));
+        currentLevel = getSearchIntent.getStringExtra("level");
+        Log.d("level",currentLevel);
         Log.d("MaxHeight", "elevation : "+GoalElevation);
         locationRequest = new LocationRequest()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
@@ -105,9 +110,13 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
+        arrivalRate = findViewById(R.id.arrival_rate);
+        arrivalRate.setText("0");
         mname = findViewById(R.id.start);
         mname.setText(MountName);
+        levelView= findViewById(R.id.levelInfo);
+        levelView.setText(currentLevel);
+        //xml 추가 후 이거
         Chronometer stopWatch  = (Chronometer) findViewById(R.id.chronometer);
         stopWatch.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener(){
             @Override
@@ -130,6 +139,8 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
                 intent.putExtra("mname", MountName);
                 intent.putExtra("record", userpath);
                 intent.putExtra("UserID", UserID);
+                intent.putExtra("Level",currentLevel);//현재 난이도 전달
+                intent.putExtra("Rate",CurRate);// 현재 달성률 전달
                 startActivity(intent);
             }
         });
@@ -304,28 +315,27 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
                     bundle.putString("elevation", ele);
                     message.setData(bundle);
                     handler.sendMessage(message);
-                    double ele1 = Double.parseDouble(ele);
+                    CurElevation = Double.parseDouble(ele);
                     Log.d("ele", "ele : " + getElevation(location.getLatitude(), location.getLongitude()));
 
                 }).start();
-
-                String Lat1 = String.valueOf(location.getLatitude());
-                String Long1 = String.valueOf(location.getLongitude());
-
-                Log.d("locationcallback", "onLocationResult : " + markerSnippet);
+                CurRate = Math.floor(CurElevation/GoalElevation*100);
+                if(CurRate >= 100)
+                {
+                    CurRate = 100;
+                }
+                Log.d("Rate",CurRate+"");
+                arrivalRate.setText(CurRate+"%");
 
                 //현재 위치에 마커 생성하고 이동
-                setCurrentLocation(location, markerTitle, markerSnippet);
 
                 mCurrentLocatiion = location;
 
                 String.valueOf(location.getLatitude());
 
-                PolylineOptions polylineOptions = new PolylineOptions();
-                if (location_info.size() > 20) {
-                    drawLine(mMap, location_info);
-                    Log.d("locationcallback", "onLocationResult: 그림그렸다");
-                }
+                drawLine(mMap, location_info);
+                Log.d("locationcallback", "onLocationResult: 현재경로 표시");
+
             }
         }
     };
@@ -360,24 +370,6 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
         }
     }
 
-    public void setCurrentLocation(Location location, String markerTitle, String markerSnippet) {
-
-        if (currentMarker != null) currentMarker.remove();
-        Log.d("cccc", "cccc7");
-        LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(currentLatLng);
-        markerOptions.title(markerTitle);
-        markerOptions.snippet(markerSnippet);
-        markerOptions.draggable(true);
-
-        currentMarker = mMap.addMarker(markerOptions);
-
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(currentLatLng);
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
-        mMap.moveCamera(cameraUpdate);
-
-    }
 
     public void drawLine(GoogleMap Map , String path){
         PolylineOptions polylineOptions = new PolylineOptions();
@@ -392,7 +384,10 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
                 polylineOptions.color(Color.BLUE);
             }
             Polyline polyline = Map.addPolyline(polylineOptions);
-
+            Log.d("get endCap", String.valueOf(polyline.getEndCap()));
+            Log.d("get endCap", String.valueOf(polyline.getJointType()));
+            Log.d("get endCap", String.valueOf(polyline.getPoints()));
+            Log.d("get endCap", String.valueOf(polyline.getZIndex()));
         }
         catch (Exception e){}
     }
@@ -406,6 +401,8 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
             polylineOptions.add(new LatLng(l.get(i).getLatitude(),l.get(i).getLongitude()));
         }
         Polyline polyline = map.addPolyline(polylineOptions);
+        polyline.setColor(0xffff0000);
+
     }
     private String convertLocToString(Location location)
     {

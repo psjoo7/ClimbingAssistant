@@ -87,6 +87,34 @@
                     android:text="mount_list_info3"
                     android:textSize="20dp" />
 
+                <RadioGroup
+                    android:id="@+id/levelGroup"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <RadioButton
+                        android:layout_weight="1"
+                        android:text="하"
+                        android:id="@+id/low"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" />
+
+                    <RadioButton
+                        android:layout_weight="1"
+                        android:text="중"
+                        android:id="@+id/middle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" />
+
+                    <RadioButton
+                        android:layout_weight="1"
+                        android:text="상"
+                        android:id="@+id/high"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" />
+
+                </RadioGroup>
             </LinearLayout>
 
         </ScrollView>
@@ -97,13 +125,13 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="28dp"
             android:layout_marginBottom="30dp"
-            android:background="@drawable/custom_round_button"
+            android:background="@drawable/custom_record_button"
             android:fontFamily="@font/aclonica"
-            android:text="Back"
             android:shadowColor="#000000"
             android:shadowDx="7.0"
             android:shadowDy="7.0"
             android:shadowRadius="7.0"
+            android:text="Back"
             android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -114,7 +142,7 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="28dp"
-            android:background="@drawable/custom_round_button"
+            android:background="@drawable/custom_record_button"
             android:fontFamily="@font/aclonica"
             android:shadowColor="#000000"
             android:shadowDx="7.0"

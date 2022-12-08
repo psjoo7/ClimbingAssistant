@@ -25,8 +25,8 @@
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="450dp"
-        android:layout_marginTop="15dp"
+        android:layout_height="500dp"
+        android:layout_marginTop="35dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -48,9 +48,27 @@
         app:layout_constraintEnd_toEndOf="@+id/chronometer"
         app:layout_constraintStart_toStartOf="@+id/chronometer"
         app:layout_constraintTop_toBottomOf="@+id/chronometer" />
+    
+    <TextView
+        android:id="@+id/level"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/aclonica"
+        android:shadowColor="#000000"
+        android:shadowDx="7.0"
+        android:shadowDy="7.0"
+        android:shadowRadius="7.0"
+        android:text="LEVEL"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/Arrival_rate"
+        app:layout_constraintEnd_toEndOf="@+id/levelInfo"
+        app:layout_constraintStart_toStartOf="@+id/levelInfo"
+        app:layout_constraintTop_toBottomOf="@+id/levelInfo" />
+
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/Arrival_rate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
@@ -73,31 +91,44 @@
         android:id="@+id/chronometer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginStart="20dp"
         android:fontFamily="@font/aclonica"
         android:text="TextView"
         android:textColor="@color/white"
         android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/arrival_rate"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/arrival_rate" />
 
     <TextView
         android:id="@+id/arrival_rate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="40dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="20dp"
         android:fontFamily="@font/aclonica"
-        android:text="TextView"
+        android:text="Arrival Rate"
         android:textColor="@color/white"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    
+    <TextView
+        android:id="@+id/levelInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:fontFamily="@font/aclonica"
+        android:text="level"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/arrival_rate"
+        app:layout_constraintStart_toEndOf="@+id/chronometer"
+        app:layout_constraintTop_toTopOf="@+id/arrival_rate" />
+    
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/mainBtn"
@@ -118,9 +149,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
 
+        android:background="@drawable/custom_buleline_opaque"
         android:fontFamily="@font/aclonica"
         android:includeFontPadding="false"
         android:shadowColor="#000000"
@@ -132,8 +164,9 @@
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/map"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.577" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
