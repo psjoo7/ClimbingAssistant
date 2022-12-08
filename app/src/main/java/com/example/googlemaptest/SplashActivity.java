@@ -95,7 +95,7 @@ public class SplashActivity extends AppCompatActivity implements ActivityCompat.
             if ( check_result ) {
 
 
-                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                Intent intent = new Intent(getApplicationContext(),LoadingActivity.class);
                 startActivity(intent);
 
             }

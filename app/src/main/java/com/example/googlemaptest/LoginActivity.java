@@ -42,10 +42,6 @@ public class LoginActivity extends AppCompatActivity {
 
         // 타이틀바 삭제
 
-
-        Intent intent = new Intent(this, LoadingActivity.class);
-        startActivity(intent);
-
         ID = findViewById(R.id.userID);
         Pwd = findViewById(R.id.userPwd);
         JoinBtn = findViewById(R.id.JoinButton);
