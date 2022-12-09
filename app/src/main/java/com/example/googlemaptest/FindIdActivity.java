@@ -1,6 +1,7 @@
 package com.example.googlemaptest;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,6 +30,7 @@ public class FindIdActivity extends AppCompatActivity {
     private EditText name;
     private ImageButton FindBtn;
     private LinearLayout findlinear;
+    private Button BackBtn;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +38,15 @@ public class FindIdActivity extends AppCompatActivity {
         name = findViewById(R.id.userName);
         findlinear = findViewById(R.id.linearLayout);
         FindBtn = findViewById(R.id.FindButton);
-
+        BackBtn = findViewById(R.id.BackButton);
+        BackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(FindIdActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
         FindBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
