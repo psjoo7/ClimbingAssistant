@@ -1,13 +1,16 @@
 package com.example.googlemaptest;
 
 public class Record {
-    private String time, record, mname, UserID;
+    private String time, record, mname, UserID, level;
+    private Double arrivalRate;
 
-    public Record(String time, String record, String mname, String UserID){
+    public Record(String time, String record, String mname, String UserID, Double arrivalRate, String level){
         this.time = time;
         this.mname = mname;
         this.record = record;
         this.UserID = UserID;
+        this.arrivalRate = arrivalRate;
+        this.level = level;
     }
 
     public void setMname(String mname) {
@@ -40,5 +43,21 @@ public class Record {
 
     public String getUserID() {
         return UserID;
+    }
+
+    public Double getArrivalRate() {
+        return arrivalRate;
+    }
+
+    public void setArrivalRate(Double arrivalRate) {
+        this.arrivalRate = arrivalRate;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
     }
 }

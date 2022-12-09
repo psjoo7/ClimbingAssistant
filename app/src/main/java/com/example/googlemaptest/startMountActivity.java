@@ -39,6 +39,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -63,7 +64,9 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
     private static final int UPDATE_INTERVAL_MS = 3000;  // 3초
     private static final int FASTEST_UPDATE_INTERVAL_MS = 3000; // 3초
     private String MountName, UserID;
-    private DatabaseReference mData, mRef;
+    private DatabaseReference mData;
+    private Task<Void> mmData;
+    private DatabaseReference mRef, mmRef;
     private String path;
     private GoogleMap mMap;
     private TextView mname;
@@ -83,7 +86,7 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
     private TextView levelView;
     Location mCurrentLocatiion;
     LatLng currentPosition;
-
+    private Double startElevation = 0.0;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -139,8 +142,12 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
                 intent.putExtra("mname", MountName);
                 intent.putExtra("record", userpath);
                 intent.putExtra("UserID", UserID);
-                intent.putExtra("Level",currentLevel);//현재 난이도 전달
+                intent.putExtra("level",currentLevel);//현재 난이도 전달
                 intent.putExtra("Rate",CurRate);// 현재 달성률 전달
+                Record userRecord = new Record(recordtime, userpath, MountName, UserID, CurRate, currentLevel);
+                mmRef = FirebaseDatabase.getInstance().getReference("UserRecord");
+                UserID = UserID.split("[.]")[0];
+                mmData = mmRef.child(UserID).push().setValue(userRecord);
                 startActivity(intent);
             }
         });
@@ -297,7 +304,7 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
                 location_info.add(location);
                 //location = locationList.get(0);
                 String a = convertLocToString(location);
-                userpath += a;
+
 
                 currentPosition
                         = new LatLng(location.getLatitude(), location.getLongitude());
@@ -307,6 +314,7 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
                         + " 경도:" + String.valueOf(location.getLongitude());
 
                 new Thread(() -> {
+
                     Looper.prepare();
                     String ele = getElevation(location.getLatitude(), location.getLongitude());
                     Handler handler = new Handler();
@@ -319,13 +327,26 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
                     Log.d("ele", "ele : " + getElevation(location.getLatitude(), location.getLongitude()));
 
                 }).start();
-                CurRate = Math.floor(CurElevation/GoalElevation*100);
+                if(startElevation == 0.0){
+                    if(CurElevation != 0.0)
+                        startElevation = CurElevation;
+                }
+                userpath += a + " " + CurElevation + ",";
+                Log.d("Rate", " : " + GoalElevation + " " + startElevation + " " + CurElevation + " " + (GoalElevation-startElevation)/100);
+                CurRate = -((GoalElevation-startElevation)/100) * (CurElevation - startElevation);
+
+                Log.d("Rate", " : " + CurRate);
                 if(CurRate >= 100)
                 {
                     CurRate = 100;
                 }
+                if(CurRate <= 0){
+                    CurRate = 0;
+                }
                 Log.d("Rate",CurRate+"");
-                arrivalRate.setText(CurRate+"%");
+                CurRate = Math.round(CurRate * 100) / 100;
+                arrivalRate.setText(String.format("%.2f",CurRate)+"%");
+//                arrivalRate.setText(String.valueOf(Math.floor(CurElevation)) + " / " + String.valueOf(Math.floor(GoalElevation)));
 
                 //현재 위치에 마커 생성하고 이동
 
@@ -335,7 +356,7 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
 
                 drawLine(mMap, location_info);
                 Log.d("locationcallback", "onLocationResult: 현재경로 표시");
-
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPosition, 20));
             }
         }
     };
@@ -406,7 +427,7 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
     }
     private String convertLocToString(Location location)
     {
-        String coordinate = String.valueOf(location.getLatitude())+" "+ String.valueOf(location.getLongitude())+",";
+        String coordinate = String.valueOf(location.getLongitude())+" "+ String.valueOf(location.getLatitude());
         return coordinate;
     }
 }

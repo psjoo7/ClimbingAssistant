@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -36,10 +37,6 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
     private Button TraceButton,mainBtn;
     private String level;
 
-//            intent.putExtra("time", time1);
-//                intent.putExtra("mname", MountName);
-//                intent.putExtra("record", "It is path.");
-//                intent.putExtra("UserID", UserID);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,29 +46,27 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
         time_result = findViewById(R.id.time_result);
         level_result = findViewById(R.id.level);
 
-        //get record ( 추가 요소 : 총경로 아직 안됐음, arrival rate 필요)
         Intent getRecords = getIntent();
         time = getRecords.getStringExtra("time");
         record = getRecords.getStringExtra("record");
         mname = getRecords.getStringExtra("mname");
         UserID = getRecords.getStringExtra("UserID");
-        level = getRecords.getStringExtra("Level");
-        Log.d("currentLLLL",level);
-        //유저 아이디가 제대로 안넘어와서 오류 생기는건데 수정은 안했습니다 확인부탁드려용
+        level = getRecords.getStringExtra("level");
+        Log.d("currentLLLL1",level);
         ArrivalRate = getRecords.getDoubleExtra("Rate",0);
         Log.d("RRRRR",ArrivalRate+"%");
         Log.d("userID",UserID+"");
-        UserID = UserID.split("[.]")[0];
+//        UserID = UserID.split("[.]")[0];
         ArrivalRate_result.setText(ArrivalRate+"");
         time_result.setText(time);
         level_result.setText(level);
         //weather_result.setText(
-        Record userRecord = new Record(time, record, mname, UserID);
+//        Record userRecord = new Record(time, record, mname, UserID, ArrivalRate, level);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        mRef = FirebaseDatabase.getInstance().getReference("UserRecord");
-        mData = mRef.child(UserID).push().setValue(userRecord);
+//        mRef = FirebaseDatabase.getInstance().getReference("UserRecord");
+//        mData = mRef.child(UserID).push().setValue(userRecord);
         TraceButton = findViewById(R.id.TraceButton);
         TraceButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,6 +94,9 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
         drawLine(mMap, record);
+        String location = record.split(",")[0];
+        LatLng latlng = new LatLng(Double.parseDouble(location.split(" ")[1]), Double.parseDouble(location.split(" ")[0]));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, 20));
     }
 
     // polyline을 그리는 함수, path를 받아온다.

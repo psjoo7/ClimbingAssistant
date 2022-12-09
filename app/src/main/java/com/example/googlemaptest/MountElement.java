@@ -40,7 +40,7 @@ public class MountElement implements Comparable<MountElement>{
     public int compareTo(MountElement mountElement) {
         if(mountElement.distance - this.distance > 0)
         {
-            return 1;
+            return -1;
         }
         else if(mountElement.distance - this.distance == 0)
         {
@@ -48,7 +48,7 @@ public class MountElement implements Comparable<MountElement>{
         }
         else
         {
-            return -1;
+            return 1;
         }
 
     }

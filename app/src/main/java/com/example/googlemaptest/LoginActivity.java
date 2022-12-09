@@ -54,21 +54,31 @@ public class LoginActivity extends AppCompatActivity {
                 String UserID = ID.getText().toString();
                 String UserPwd = Pwd.getText().toString();
 
-                mFirebaseAuth.signInWithEmailAndPassword(UserID, UserPwd).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            //로그인 성공
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            Log.d("LoginActivity", "Login Worked");
-                            intent.putExtra("UserID", UserID);
-                            startActivity(intent);
-                            finish(); //현재 액티비티 파괴
-                        }else {
-                            Toast.makeText(LoginActivity.this, "로그인 실패..", Toast.LENGTH_SHORT).show();
+                if (UserID.equals("")) {
+                    Toast.makeText(LoginActivity.this, "이메일을 입력하세요...", Toast.LENGTH_SHORT).show();
+                    return;
+                }else if(UserPwd.equals("")){
+                    Toast.makeText(LoginActivity.this, "비밀번호를 입력하세요...", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                else {
+                    mFirebaseAuth.signInWithEmailAndPassword(UserID, UserPwd).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                //로그인 성공
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                Log.d("LoginActivity", "Login Worked");
+                                intent.putExtra("UserID", UserID);
+                                startActivity(intent);
+                                finish(); //현재 액티비티 파괴
+                            } else {
+                                Toast.makeText(LoginActivity.this, "로그인 실패..", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
                         }
-                    }
-                });
+                    });
+                }
             }
         });
         //회원가입 버튼 클릭시

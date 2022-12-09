@@ -85,4 +85,25 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
         app:layout_constraintVertical_bias="0.506"></androidx.appcompat.widget.AppCompatButton>
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="65dp"
+        android:layout_height="74dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        app:srcCompat="@drawable/ic_baseline_flag_24" />
+
+    <TextView
+        android:id="@+id/count"
+        android:layout_width="97dp"
+        android:layout_height="42dp"
+        android:text="TextView"
+        android:textSize="16sp"
+        android:textColor="#EAD443"
+        android:fontFamily="@font/aclonica"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
