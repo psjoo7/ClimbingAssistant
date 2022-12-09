@@ -38,6 +38,7 @@ public class RecordActivity extends AppCompatActivity {
         mRef = FirebaseDatabase.getInstance().getReference("UserRecord");
         mData = mRef.child(UserID);
         recordlinear = findViewById(R.id.recordview);
+
         mData.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

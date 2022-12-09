@@ -58,6 +58,7 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
         Log.d("userID",UserID+"");
 //        UserID = UserID.split("[.]")[0];
         ArrivalRate_result.setText(ArrivalRate+"");
+//        ArrivalRate_result.setText(String.format("%.2f",ArrivalRate)+"");
         time_result.setText(time);
         level_result.setText(level);
         //weather_result.setText(

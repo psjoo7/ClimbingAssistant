@@ -332,20 +332,17 @@ public class startMountActivity extends AppCompatActivity implements OnMapReadyC
                         startElevation = CurElevation;
                 }
                 userpath += a + " " + CurElevation + ",";
-                Log.d("Rate", " : " + GoalElevation + " " + startElevation + " " + CurElevation + " " + (GoalElevation-startElevation)/100);
-                CurRate = -((GoalElevation-startElevation)/100) * (CurElevation - startElevation);
-
+//                Log.d("Rate", " : " + GoalElevation + " " + startElevation + " " + CurElevation + " " + (GoalElevation-startElevation)/100);
+//                CurRate = ((GoalElevation-startElevation)/100) * (CurElevation - startElevation) * 100;
+                CurRate = Math.floor(CurElevation / GoalElevation * 100);
                 Log.d("Rate", " : " + CurRate);
                 if(CurRate >= 100)
                 {
                     CurRate = 100;
                 }
-                if(CurRate <= 0){
-                    CurRate = 0;
-                }
                 Log.d("Rate",CurRate+"");
-                CurRate = Math.round(CurRate * 100) / 100;
-                arrivalRate.setText(String.format("%.2f",CurRate)+"%");
+                arrivalRate.setText(CurRate+"%");
+//                arrivalRate.setText(String.format("%.2f",CurRate)+"%");
 //                arrivalRate.setText(String.valueOf(Math.floor(CurElevation)) + " / " + String.valueOf(Math.floor(GoalElevation)));
 
                 //현재 위치에 마커 생성하고 이동
